@@ -1,0 +1,194 @@
+Word count command (wc command):
+----------------------------------
+to count number of word,lines and characters in the given file.
+
+wc filename
+ no_of_lines no_of_words no_of_characters filename
+ 
+ wc abc.txt
+ 4 24 135 abc.txt where 4 --lines, 24 --words, 135 ---characters(no of bytes of fileSize)
+
+options are:
+
+-l -- to print only number of lines
+-w -- to print only number of words
+-c --- to print only nuber of characters
+-lw -- to print only lines and words
+-lc --to print only lines and charcter
+-wc -- to print only words and characters.
+-L--- to print numbe rof character present in longest line.
+
+wc -L abc.txt
+wc -l abc.txt
+
+We can use wc commands for multiple files simltemonsly.
+wc abc.txt example.txt 
+ 1 10 47 abc.txt
+ 1  4 19 example.txt
+ 2 14 66 total
+
+::
+wc -l abc.txt example.txt 
+ 1 abc.txt
+ 1 example.txt
+ 2 total
+wc -c abc.txt example.txt 
+47 abc.txt
+19 example.txt
+66 total
+ 
+::
+📘 RHCA/RHCSA – Detailed Notes
+🔧 Topic: wc – Word Count Command in Linux
+📌 Description:
+
+The wc (word count) command is used to count lines, words, characters, bytes, and the length of the longest line in a file or files.
+🔹 Syntax:
+
+wc [options] [filename...]
+
+🛠️ Common Options:
+Option	Description
+-l	Count the number of lines
+-w	Count the number of words
+-c	Count the number of bytes (characters)
+-L	Show length of the longest line
+-m	Count characters (instead of bytes)
+-lw	Count lines and words
+-lc	Count lines and characters
+-wc	Count words and characters
+
+    💡 -m is similar to -c unless you are dealing with multi-byte characters (UTF-8 etc.).
+
+📂 Example File (abc.txt):
+
+Let's say this file has:
+
+Hello world
+Welcome to Linux
+RHCSA preparation
+Be consistent!
+
+That’s:
+
+    4 lines
+
+    24 words
+
+    135 bytes
+
+✅ Examples:
+🔹 Full File Stats:
+
+wc abc.txt
+
+Output:
+
+4 24 135 abc.txt
+
+🔹 Only Number of Lines:
+
+wc -l abc.txt
+
+Output:
+
+4 abc.txt
+
+🔹 Only Number of Words:
+
+wc -w abc.txt
+
+Output:
+
+24 abc.txt
+
+🔹 Only Number of Characters (Bytes):
+
+wc -c abc.txt
+
+Output:
+
+135 abc.txt
+
+🔹 Longest Line Length:
+
+wc -L abc.txt
+
+Output:
+
+23 abc.txt
+
+(Here 23 is the number of characters in the longest line.)
+🔹 Multiple Files:
+
+wc abc.txt example.txt
+
+Output:
+
+1 10 47 abc.txt
+1  4 19 example.txt
+2 14 66 total
+
+🔹 Count Only Lines for Multiple Files:
+
+wc -l abc.txt example.txt
+
+Output:
+
+1 abc.txt
+1 example.txt
+2 total
+
+🧠 Summary Table:
+Command	What It Does
+wc file.txt	Count lines, words, characters
+wc -l file.txt	Count lines only
+wc -w file.txt	Count words only
+wc -c file.txt	Count bytes (characters) only
+wc -L file.txt	Show length of longest line
+wc file1 file2	Count for both files + total
+❓ Questions & Answers:
+1. What does the command wc -l file.txt display?
+
+Answer: It displays the number of lines in file.txt.
+2. Which option shows the number of characters in the longest line of a file?
+
+Answer: -L
+3. How do you count only the number of words in a file?
+
+Answer:
+
+wc -w filename
+
+4. What will wc file1.txt file2.txt show?
+
+Answer: It will show lines, words, and characters for each file and a total at the end.
+5. How can you view both the number of lines and characters in a file?
+
+Answer:
+
+wc -lc filename
+
+6. How do you check which line in the file is the longest in terms of character count?
+
+Answer:
+
+wc -L filename
+
+7. What’s the difference between wc -c and wc -m?
+
+Answer:
+
+    -c: counts bytes (good for English text).
+
+    -m: counts characters (for multibyte/Unicode support).
+
+8. What is the output format of wc without any options?
+
+Answer:
+
+<lines> <words> <characters> filename
+
+Would you like me to continue with the next topic or generate a quick quiz practice for wc? 
+ 
+ 
