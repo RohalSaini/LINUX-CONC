@@ -1,0 +1,411 @@
+
+Redirection ::
+Standard input,Standard output and Standard Error are the data streams and can flow from one place t another.We can redirect these streams as:
+
+
+1. Redirecting Standard Output:
+Standard output Associated with 1
+Standard input Associated with 2
+Standard Error Associated with 0
+
+but by default Standard output with terminal but we can redirect this standard output from terminal to some where else., it is called output redirection.
+We can perform output redirectio  with > and >> .
+
+> ---will perform override of existing data
+>> will peform appemding to existig data.
+
+
+eg: To redirect stnadard output of cat  command from terminal to output.txt.
+
+note: bydefault the standard input redirect to the terminal:
+cat
+This my first Code
+
+
+
+But here we redirect the standard input to the output.txt
+$ cat 1>output.txt  /// overrriding the data output.txt by replacing the content from Standard Input.
+
+# cat 1>> output.txt // appending the input stream data to file output.txt file.
+
+$ cat 1 > output.txt // as it is invalid 
+
+:::
+
+bydefault > and >> are always meant for output redirection  only.we are not required to mention as 1 so it can be written as
+
+$ cat > output.txt  // as bydefault meant for outtput rediect so we have not need to mention.
+# cat >> output.txt
+
+
+
+::Oveeride mode::
+$ cat >output.txt
+Apple
+Bannna
+Orange
+
+$ cat output.txt 
+Apple
+Bannna
+Orange
+
+Redirecting Standard Error:::
+------------------------------
+bydefault standard error device is connected to terminal and we can redirect error messages from terminal to required place.
+eg::
+$ cal hello
+cal: not a valid year hello
+
+As output is redirect to the terminal and if we can redirect to file then as following through error redirection by using > and >> and standard error stream is associated with digit 2.
+
+> --override mode
+>> --append mode
+
+$ cal hello 2>> error.txt // error message redirect to error.txt
+$ cat error.txt 
+cal: not a valid year hello
+
+:::
+$ cal hello 2>> error.txt ===> Error redirection with append mode(>>)
+$ cal hello >> error.txt ==> output redirection with append mode (>>) as error message will display on error as error redirection is on terminal bydefault.
+
+:::
+
+Redirect Standard Input:
+------------------------
+bydefault standard input device is conencted with keyword and we can redirect from keyword to somewhere else
+
+Standard Input Stream associated with 0
+We can peform input redirection by usin < symbol.
+
+eg:
+
+cat --> bydefautl taking input from keyword.
+cat 0< a.txt // getting input from file and output to terminal.
+
+note: by default < is assoctiated with 0 hence we can emit 0 and we can write in short form as:
+
+cat < a.txt // it will take input from a.txt and output Stream is terminal.
+
+If we are not using any symbol with cat command by bydefault it is always consider < only and hence we can remove < also.
+$cat a.txt is valid but in system it is as cat 0< a.txt 
+
+
+//Reading input from a.txt and output to result.txt
+$cat 0< a.txt 1> result.txt
+
+$cat a.txt > result.txt // as cat bydefualt has output symbol hene it can emmit and input.
+
+
+$cat 0<a.txt 1>result.txt 2>>error.txt 
+note:
+0<a.txt --- input redirection from keyword to a.txt
+1>result.txt --> output redirection from termial t result.txt
+2>>error.txt --> error redirection from terminal to error.txt
+
+we can write as folling as both are same and one is shortcut
+
+$cat 0<a.txt 1>result.txt 2>>error.txt or
+$cat a.txt >result.txt 2>>error.txt 
+
+Suppose both output adn errors redirected to result.txt only.
+
+
+cat a.txt > result.txt 2>result.txt or cat a.txt &> result.txt both output and error redirection.
+
+>,>> eithet output redirectio or error redirection
+&> (override mode), &>>(append mode) ... both output and error redirection to a single place.
+
+
+Redirecting Standard Output of One terminal to another terminal.
+-----------------------------------------------------------------
+In Unix every thing is treated as file even as terminal also. so we can find terminal related filr by using tty command.
+
+tty
+/dev/pts/0 -> file related to current terminal.
+
+One terminaal --> /dev/pts/0 or check by tty
+Second terminal --> /dev/pts/1 or check by tty
+
+
+ech0 "Hello" > /dev/pts/1 --> directig from current terminal to terminal 1.
+
+Redirection Message between Terminal::
+eg:
+Teminal 0::
+$ tty
+/dev/pts/0
+
+$ echo "hello" > /dev/pts/1
+$ Hello
+
+$ echo "how are you" > /dev/pts/1
+$ fine
+$ clear > /dev/pts/1
+
+Terminal 1:
+$ tty
+/dev/pts/1
+$ hello
+
+echo "Hello" > /dev/pts/0
+$ how are you
+$ echo "fine" > /dev/pts/0
+
+
+
+$cal >/dev/pts/1 //showing output to terminal 1
+
+
+Question 1: In how many ways a command can get input ?
+Answer: 
+
+Question2 : Which of the following are data strems ?
+Answer: 
+Standard Input
+Standard Output
+Standard Error
+
+Question 3: Bydefault standard input device connected to:
+Answer: Keyword
+
+Question 4: Standard Output: Terminal 
+Question 5: Standard Error : Terminal
+Question 6: Standard Input : Keyboard
+
+
+
+0 --Standard Input Stream
+1-- Standard Output Stream
+2-- Standard Error Stream
+
+How we can redirect standard output of the ls command to a filecalled output.txt ?
+ls > output.txt or ls 1> output.txt
+
+
+How we can redirect the standard output of the ls command to output.txt and at same time , redirect the standard error to error.txt ?
+
+ls > output.txt 2> error.txt or ls output.txt 2>> error.txt
+
+
+< symbol meant for input redirection but overriding mode
+> for output and error redirection but overriding mode 
+>> appending output and error redirection 
+
+
+
+CHATGPT::
+
+Redirection in Unix/Linux
+
+In Unix/Linux, standard streams handle the flow of input and output:
+
+    0 – Standard Input (stdin) – Usually the keyboard
+
+    1 – Standard Output (stdout) – Usually the terminal
+
+    2 – Standard Error (stderr) – Usually the terminal
+
+We can redirect these streams using special symbols.
+1️⃣ Redirecting Standard Output
+
+By default, standard output goes to the terminal. You can redirect it elsewhere:
+
+    > – Redirect output (overwrite mode)
+
+    >> – Redirect output (append mode)
+
+Example:
+
+$ cat > output.txt
+This is a test.
+
+This writes to output.txt. Next time if you do:
+
+$ cat >> output.txt
+Another line.
+
+It will append instead of overwriting.
+
+💡 You can also use:
+
+$ ls > output.txt        # Standard output redirection (overwrite)
+$ ls 1> output.txt       # Same as above; "1" is optional
+
+2️⃣ Redirecting Standard Error
+
+By default, error messages also go to the terminal. You can redirect them like this:
+
+    2> – Redirect standard error (overwrite)
+
+    2>> – Redirect standard error (append)
+
+Example:
+
+$ cal hello 2> error.txt
+$ cat error.txt
+cal: not a valid year hello
+
+🔁 To append errors:
+
+$ cal hello 2>> error.txt
+
+3️⃣ Redirecting Standard Input
+
+The input comes from the keyboard by default, but can be redirected from a file using <:
+
+    < – Input redirection
+
+    0< – Same as <, specifying file descriptor 0
+
+Example:
+
+$ cat < a.txt           # Takes input from a.txt
+$ cat 0< a.txt          # Same as above
+
+Redirect both input and output:
+
+$ cat 0< a.txt 1> result.txt
+# or more commonly:
+$ cat a.txt > result.txt
+
+Include error redirection:
+
+$ cat a.txt > result.txt 2>> error.txt
+
+4️⃣ Redirect Both Output and Error to the Same File
+
+$ cat a.txt > result.txt 2> result.txt    # Both stdout and stderr to same file (not ideal)
+$ cat a.txt &> result.txt                 # Better: redirects both stdout and stderr
+$ cat a.txt &>> result.txt                # Append both to same file
+
+5️⃣ Redirect Output Between Terminals
+
+Use the tty command to find terminal file names.
+
+Example:
+
+    Terminal 0: /dev/pts/0
+
+    Terminal 1: /dev/pts/1
+
+$ echo "Hello" > /dev/pts/1     # From Terminal 0 to Terminal 1
+$ cal > /dev/pts/1              # Output of cal command sent to Terminal 1
+
+✅ Practice Questions
+
+Q1: In how many ways a command can get input?
+A:
+
+    From keyboard (default)
+
+    From a file using < or 0<
+
+    From another command via pipeline (|)
+
+Q2: Which of the following are data streams?
+A:
+✔ Standard Input
+✔ Standard Output
+✔ Standard Error
+
+Q3: By default, standard input device is connected to:
+A: Keyboard
+
+Q4: Standard Output is connected to:
+A: Terminal
+
+Q5: Standard Error is connected to:
+A: Terminal
+
+Q6: File Descriptors
+
+    0 – Standard Input
+
+    1 – Standard Output
+
+    2 – Standard Error
+
+Example:
+
+Redirect standard output of ls to output.txt:
+
+$ ls > output.txt
+
+Redirect standard output to output.txt and error to error.txt:
+
+$ ls > output.txt 2> error.txt
+
+Let me know if you'd like this formatted into a PDF, Markdown guide, or if you want practice problems based on redirection!
+You said:
+add miscelalius example
+ChatGPT said:
+
+Sure, Rohal! Here’s a Miscellaneous Examples section to expand your redirection guide with some cool and practical use cases you might not see in basic tutorials.
+🧰 Miscellaneous Redirection Examples
+1️⃣ Suppressing Output
+
+You can ignore output by redirecting it to /dev/null, which is like a black hole.
+
+    Suppress standard output:
+
+$ command > /dev/null
+
+    Suppress standard error:
+
+$ command 2> /dev/null
+
+    Suppress both:
+
+$ command > /dev/null 2>&1
+
+💡 2>&1 means "redirect standard error (2) to where standard output (1) is going".
+2️⃣ Logging Both Output and Error to Same File
+
+$ command > log.txt 2>&1
+
+Or shorthand:
+
+$ command &> log.txt
+
+To append both output and error:
+
+$ command &>> log.txt
+
+3️⃣ Combining Input and Output Redirection
+
+$ sort < unsorted.txt > sorted.txt
+
+This takes input from unsorted.txt, sorts it, and writes the result to sorted.txt.
+4️⃣ Redirecting with Pipes and Tee
+
+If you want to see the output on the terminal and write it to a file:
+
+$ ls -l | tee output.txt
+
+To append:
+
+$ ls -l | tee -a output.txt
+
+5️⃣ Reading from /dev/stdin or /dev/fd
+
+$ echo "Hello" | cat > /dev/stdin
+
+Or use /dev/fd/0, /dev/fd/1, /dev/fd/2 which represent stdin, stdout, stderr respectively.
+6️⃣ Using exec to Redirect for an Entire Script
+
+You can redirect once using exec and every command that follows will use the new redirection:
+
+#!/bin/bash
+exec > output.txt 2>&1  # All stdout and stderr now go to output.txt
+
+echo "Starting script..."
+ls /notexist              # This error will also be logged
+echo "Script completed"
+
+7️⃣ Silent Install with Logging
+
+$ ./install.sh > install.log 2>&1
+
+Installs silently and logs both output and errors for debugging.
