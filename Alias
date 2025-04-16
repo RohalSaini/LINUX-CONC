@@ -277,3 +277,47 @@ The Red Hat Certified Architect (RHCA) is the most prestigious and advanced cert
 
 ::
 
+
+
+RHCA - Command Aliasing in Unix/Linux
+Problem 1: Multiple Command Execution via Alias
+You need to define an alias 'cleanlog' that clears the contents of /var/log/messages, then lists the updated
+size.
+Alias:
+alias cleanlog='> /var/log/messages && ls -lh /var/log/messages'
+Note: In scripts, use 'shopt -s expand_aliases' to allow alias expansion.
+Problem 2: Alias for Root-Only Command
+Alias 'upd' should run 'yum update -y' only if user is root.
+Alias:
+alias upd='[ $(id -u) -eq 0 ] && yum update -y || echo "Run as root!"'
+Problem 3: Alias That Accepts Arguments
+Aliases can't accept arguments. Use functions instead.
+Function:
+glog() {
+git log --oneline "$@"
+}
+Problem 4: Persistent Aliases Check
+Ensure .bashrc contains:
+if [ -f ~/.bash_aliases ]; then
+. ~/.bash_aliases
+fi
+Page 1
+RHCA - Command Aliasing in Unix/Linux
+Then source it using:
+source ~/.bashrc
+Problem 5: Conflict Between Shell Keyword and Alias
+'test' is a shell builtin. Alias will not override it.
+Use a different name like 'mytest'.
+Check type using: type test
+Problem 6: Auto-Switch to Directory and Run Script
+Alias to switch directory and run a script:
+alias godev='cd ~/projects/dev && ./start.sh'
+Problem 7: Language Compatibility
+Alias for German users:
+alias speicher='df -h'
+Problem 8: Create a Nested Alias Tree
+Define:
+alias cls='clear'
+alias allclear='cls && echo "Screen cleared!"'
+Note: Works only in interactive shells
+
