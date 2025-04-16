@@ -1,0 +1,279 @@
+Command Aliasing:
+-----------------
+
+Alias means alternative name or nick name
+We can give our own more convinient nicknames for unix commands. This cncept is called command aliasing.
+
+How to create alias name:
+$ alias nickname="orginical command"
+$ alias nickname='original command'
+$ alias nickname=original command
+
+While defining name before and after equal symbol space is not allowed.
+
+$ alias nickname ='original command' // not allowed
+$ alias nickname = 'original command' // not allowed
+$ alias nickname= 'original command' // not allowed
+
+You can check alias as alias command.
+
+Our own alias:
+--------------
+alias cls='clear' now cls will work ans you can check in alias its added in the alias and we can check.
+
+
+Remove alias::
+--------------
+We have to use unalias command.
+$unalias cls
+
+to remove all alias we can:
+$unalias -a
+
+to check wheather alias is given:
+$ type cls
+cls is aliased to `clear'
+
+
+renaming alias as it override the cls name with new command.
+alias cls=clear
+alias cls=date
+
+
+We can create the alias of own created alias as well:
+alias cls=clear
+alias allClear=cls
+
+allClear --> it will clear screen.
+
+
+:::
+Where we use aliasing:
+1. if any lenghty command repeatedly then , we can create shorcit name and we can use shortcut evertime.
+
+mkdir dir1;touch dir1/file{1..20}.txt
+
+alias s20f="mkdir dir1;touch dir1/file{1..20}.txt"
+s20f => 20 files created with dir1
+
+
+ eg: To listout all files present in current working directory , save this data to output.txt and display the number of lies to the terminal.Define alias for curretn for this activity?
+Anser:
+alias current="ls |tee output.txt|wc -l
+current
+
+
+2. To use our home operating system commands in linux directly 
+alias cls=clear
+alias rename=mv
+
+3. to handle types mistakes
+alias grpe=grep
+
+4. to handle language barriers:
+in germany ==> datum
+alias datum=date
+
+
+how to persist alias permanently ?
+----------------------------------
+
+by using 2 ways 
+1. .bashrc file inside user home directory.
+
+ls -a --tosee hidden files.
+inside .bashrc own aliases but recomended to added at last
+
+# my own aliases
+alias cls=clear
+alias ddd=date date date
+
+to refect these alias we have to restart terminal
+
+
+2. instead of editing .bashrc file , we can create our own file to defined own alias in home directory
+the name of the file should be .bash_aliases
+# my own aliases
+alias cls=clear
+alias ddd=date date date
+
+
+
+Queston: What is the purpose of alias command ?
+to define alias
+to list out all aliases
+
+How to use unalias command ?
+unalias -a
+
+to persist aliases , in which file we have to define ?
+.bashrc or .bash_aliases
+
+which is the valid way to crate aliases ?
+alias rename=mv
+alias rename="mv"
+alias rename='mv'
+
+
+
+
+CHATPT:
+Your notes on Command Aliasing in Unix/Linux are pretty solid! I've gone ahead and cleaned up the grammar, formatting, and clarity a bit so you can use this as a reference or share it if needed. Here's the refined version:
+Command Aliasing in Unix/Linux
+What is Alias?
+
+An alias is an alternative or nickname for a command. Aliasing allows users to create convenient shorthand versions of longer or frequently used commands.
+How to Create an Alias
+
+Syntax:
+
+alias nickname="original command"
+alias nickname='original command'
+alias nickname=original_command
+
+    ❗ No spaces are allowed before or after the equal sign.
+
+❌ Invalid examples:
+
+alias nickname ='command'
+alias nickname = 'command'
+alias nickname= 'command'
+
+View Existing Aliases
+
+Use the alias command to list all currently defined aliases:
+
+alias
+
+Example: Creating and Using an Alias
+
+alias cls='clear'
+
+Now typing cls will work the same as clear.
+
+To check how a command is aliased:
+
+type cls
+
+Output:
+
+cls is aliased to `clear`
+
+Overriding an Alias
+
+alias cls='clear'
+alias cls='date'
+
+The second alias will override the first one. Now cls runs the date command.
+Creating an Alias of Another Alias
+
+alias cls='clear'
+alias allClear='cls'
+
+Now typing allClear will also clear the screen.
+Where is Aliasing Useful?
+
+    Shortcuts for Long Commands
+
+alias s20f="mkdir dir1; touch dir1/file{1..20}.txt"
+# Typing s20f will create a folder and 20 files.
+
+Combining Multiple Commands Example: List all files, save to output.txt, and display the line count.
+
+alias current="ls | tee output.txt | wc -l"
+current
+
+Use Familiar Commands from Other OS
+
+alias cls='clear'
+alias rename='mv'
+
+Correcting Typos
+
+alias grpe='grep'
+
+Handling Language Barriers
+
+    alias datum='date'   # 'datum' is German for 'date'
+
+Removing Aliases
+
+To remove a specific alias:
+
+unalias cls
+
+To remove all aliases:
+
+unalias -a
+
+Making Aliases Persistent
+
+To keep aliases available even after restarting the terminal:
+Option 1: Add to .bashrc
+
+    Open .bashrc in your home directory.
+
+nano ~/.bashrc
+
+Add your aliases at the end:
+
+# My own aliases
+alias cls='clear'
+alias ddd='date; date; date'
+
+Save and exit, then restart the terminal or run:
+
+    source ~/.bashrc
+
+Option 2: Create .bash_aliases File
+
+    Create and open .bash_aliases in your home directory:
+
+nano ~/.bash_aliases
+
+Add your aliases:
+
+alias cls='clear'
+alias ddd='date; date; date'
+
+Ensure your .bashrc contains the following line to load .bash_aliases:
+
+    if [ -f ~/.bash_aliases ]; then
+        . ~/.bash_aliases
+    fi
+
+Quick Questions & Answers
+
+Q: What is the purpose of the alias command?
+A: To define new aliases or list all existing aliases.
+
+Q: How to use unalias?
+A:
+
+    To remove one alias: unalias name
+
+    To remove all aliases: unalias -a
+
+Q: Where to persist aliases?
+A: In .bashrc or .bash_aliases file in the home directory.
+
+Q: Which of the following are valid alias definitions?
+✅ Valid:
+
+alias rename=mv
+alias rename="mv"
+alias rename='mv'
+
+❌ Invalid (spaces around =):
+
+alias rename = 'mv'
+
+Let me know if you'd like this formatted into a PDF or Markdown file too!
+You said:
+deep RHCA
+ChatGPT said:
+
+The Red Hat Certified Architect (RHCA) is the most prestigious and advanced certification offered by Red Hat. It builds upon other Red Hat certifications like RHCSA and RHCE. Getting deep into RHCA means understanding its structure, focus areas, and how to strategically pursue it based on your goals.
+
+::
+
