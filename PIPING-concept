@@ -1,0 +1,313 @@
+Piping:
+------------
+Sometimes we can use the output of one commad as input to other command is called piping concept.
+By using piping , multiple commands will work together to fulfill our requirement and we can implement by using vertical bar ( | )
+
+eg:
+ls -l /etc | wc -l
+
+wc 
+This is my first Line
+This is my second line
+This is my thord line
+ctrl+D
+      3      15      67
+
+ls -l /etc | wc
+
+
+eg:2
+ls -l /etc | more ===> 
+ls -l /etc |less ==> with search feature explore this command more less.
+
+ls -l /etc | wc | wc -l ==> the output is always 1.
+ls -l /etc
+ll /etc
+
+Requirement:
+The output of ls command should be saved to the file output.txt and should be provided as input to wc command ?
+ls -l /etc > output.txt | wc -l
+ls  >> output.txt | wc
+
+In the middle of pipping if we use redirection then it breaks pippng concept.
+
+Tee command:
+-----------
+
+T- Junction
+T- pipe
+
+ls -l | tee output.txt |wc
+In piping ,  if ww want to save the output of one command to a file and if we want pass the ouput as input to next command simultaneoulsy then we shoukd use tee command.
+
+eg1: T save the output of ls command to a file and display to the terminal simultaneously.
+
+ls -l ===> it will display output to the terminal
+ls - l > output.txt ==> it will save the output to outpit.txt and wont be display to the terminal.
+
+ls -l /etc | tee output.txt ==> display output on terminal and save to file output.txt.
+
+if  I want to save the result of ls -l in output.txt and pass the output to wc command abs save to that to output to wc.txt.
+ls -l /etc | tee output.txt | wc >wc.txt
+
+
+ls -l /etc | tee output.txt | wc | tee wc.txt ==> save to file and output to terminal both.
+
+
+:: Assume input.txt contains filenames.
+
+touch file{1..5}.txt ==> file1,file2,file3,file4,file5 got created
+ls f*.txt > input.txt
+cat input.txt 
+file1.txt
+file2.txt
+file3.txt
+file4.txt
+file5.txt
+
+::
+input.txt
+---------
+file1.txt
+file2.txt
+file3.txt
+file4.txt
+file5.txt
+
+each file contains data and read file name from input.txt and remov each file.
+
+cat input.txt ==> Standard input
+
+rm file1.txt file2.txt file3.txt file4.txt file5.txt => remove 5 files.
+
+remove command always expecting from commad line arguments only but in piping the input is always stream.
+cat input/tx | rm  -> it expect command line argument and not expect input stream.
+We have to convert that stram into command line arguments.
+
+xargs command:
+--------------
+it will take stream as input and convert into command line argument.
+cat input.txt | xargs rm ==> xargs command stream into commad line argument.
+xargs command : to convert output stream into command line arguments.
+
+If input.tx has only one file then will cat input.txt } rm works with it ?
+Answer : no
+
+eg2: Assume input.txt contain multiple file names. Read all file names from input.txt and display the files content to the terminal ?
+cat input.txt | xargs cat 
+
+eg3: Display the output of date command by using echo command with piping concept ?
+date | xargs echo
+cal 2025 | xargs echo
+
+
+cat input.txt | tee 1 => save to file name as 1 and output to terminal.
+
+cat input.txt | tee 1{1..10}.txt --> saving to multiple files same input.txt data .
+
+Assignment:
+-----------
+List out all contents of /dev folder ans save to file1.txt => ls /dev > file1.txt
+list out all contents of /bin folder and save to file2.txt => ls /bin > file2.txt
+
+Write a single pipeline for the following requirement:
+
+read content of file1.txt and file2.txt ans save to file3.txt and by using  sorted command reverse the contnet of file3.txt ans save to sorted.txt file.
+
+ls /dev > file1.txt
+ls /dev > file2.txt
+
+cat file1.txt file2.txt | tee file3.txt | sort -r > sorted.txt
+
+another way:
+
+cat file1.txt file2.txt file3.txt
+sort -r file3.txt > sorted.txt
+
+::: 
+sort -r ==>sorting
+
+
+::
+pipe standard output of X commaand to the Standard input of y commamd:
+X | Y
+
+
+how to use tree command when piping together commands if A,B and C to save output of B command to results.txt ?
+A| B tee results.txt | C
+
+how to pipe data from command A ti commamnd B , but  eont accept standard input and accepts only command line arguments ?
+
+A | args B
+
+
+:::
+Here's a well-organized and formatted note on Piping, Redirection, tee, xargs, and some basic Linux command utilities, plus a starting point for deep learning with RHCA (Red Hat Certified Architect) as requested:
+🔧 Piping in Linux
+
+    Definition: Using the output of one command as input to another command.
+
+    Symbol: |
+
+    Example:
+
+    ls -l /etc | wc -l
+
+        Lists files in /etc and counts the lines (number of files).
+
+📥 Input/Output Redirection vs Piping
+
+    Redirection: > or >> used to save output to a file.
+
+        >: Overwrites file
+
+        >>: Appends to file
+
+    Piping: Connects output of one command to input of another using |
+
+🚫 Mixing Redirection in the Middle of a Pipe Breaks the Flow:
+
+ls -l /etc > output.txt | wc -l  # Incorrect
+
+    Output is redirected before reaching wc.
+
+🔁 tee Command
+
+    Purpose: Save command output to a file and pass it through the pipeline.
+
+    Syntax:
+
+command | tee filename
+
+Example:
+
+    ls -l /etc | tee output.txt | wc
+
+        Saves output to output.txt and counts lines/words/bytes using wc.
+
+📁 Save to Multiple Files:
+
+cat input.txt | tee 1{1..10}.txt
+
+🧰 xargs Command
+
+    Purpose: Converts standard input stream into command-line arguments.
+
+    Useful when a command does not accept standard input.
+
+🗑️ Example: Delete Files Listed in input.txt
+
+cat input.txt | xargs rm
+
+📄 Example: Display Contents of Files in input.txt
+
+cat input.txt | xargs cat
+
+🕒 Example: Piping with xargs and echo
+
+date | xargs echo
+cal 2025 | xargs echo
+
+🧪 Assignment Walkthrough
+🔹 Objective:
+
+    List contents of /dev → file1.txt
+
+    List contents of /bin → file2.txt
+
+    Merge file1.txt & file2.txt, save to file3.txt
+
+    Reverse sort file3.txt to sorted.txt
+
+✅ Solution (Pipeline version):
+
+cat file1.txt file2.txt | tee file3.txt | sort -r > sorted.txt
+
+✅ Alternative:
+
+cat file1.txt file2.txt > file3.txt
+sort -r file3.txt > sorted.txt
+
+🌲 Using tree with tee
+Example:
+
+Save intermediate output from B while piping from A to C:
+
+A | B | tee results.txt | C
+
+❓ Command Accepts Only CLI Arguments, Not Input Stream
+
+    Use xargs:
+
+A | xargs B
+
+📚 Deep Learning with RHCA (Red Hat Certified Architect)
+
+While RHCA focuses on advanced system administration, you can integrate deep learning into it with tools on RHEL systems:
+📌 Suggested Topics to Explore:
+
+    Install and Use Python Environments
+
+        Use dnf to install Python, pip, virtualenv
+
+        Use Anaconda or Miniconda for ML projects
+
+    Install Libraries on RHEL/CentOS
+
+        pip install numpy pandas scikit-learn tensorflow keras torch
+
+    Use Containers for Deep Learning
+
+        Learn podman, docker, and OpenShift to run ML workloads
+
+        RHCA has Container-Based Virtualization tracks
+
+    Using GPUs for Training
+
+        Enable NVIDIA drivers and CUDA toolkit on RHEL
+
+    Practical Use Case Projects:
+
+        Use Flask or Django with PyTorch/TensorFlow
+
+        Deploy ML APIs on OpenShift or Podman containers
+
+    Security + SELinux
+
+        Secure your DL environments
+
+        Audit GPU containers with SELinux
+
+✅ Quick Summary
+Command	Description
+`	`
+> >>	Redirection to file (overwrite or append)
+tee	Save and forward output simultaneously
+xargs	Convert stream to command-line arguments
+sort -r	Reverse sorting
+cat	Display/concatenate files
+rm	Remove files
+tree	Display directory structure visually
+
+Let me know if you want a visual diagram of piping or a deeper explanation of RHCA with real-world ML projects on RHEL!
+
+
+:::
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
