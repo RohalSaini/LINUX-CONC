@@ -1,0 +1,241 @@
+date commad :
+-------------
+We can use date command to display date and time.
+
+$ date => show date and time together..
+
+Various options:
+----------------
+
+1. date +%D => it will display date in the form : mm/dd/yyyy
+2. date +%T ==> it will display time in the form: hh:mm:ss
+3. date +%d == only day value
+4. date +%m == only month value
+5. date +%y == only year in yy  form
+6. date +%Y == only yearin yyyy form.
+
+7. date +%H == only hours vlaue in 24 hours
+8. date +%M == only minutes 
+9. date +%S == only seconds
+10. date +%I == only hour in 12hour scale
+
+
+::
+1. to display current date in format in dd-mm-yyyy
+$ date +%d-%m-%Y
+$ date +%d:%m:%Y
+
+2. log files ===> a log file should include value also
+eg:
+time stamped file
+server_27032020.log
+server_28032020.log
+
+Create an empty file wheer file name contains current system date.
+touch $(date +timestamp_%d%m%Y.log)
+touch server_$(date +%d%m%Y).log
+touch server_$(date +%d%m%Y%H%M%S).log
+
+
+rm a* => remove files start with a letter.
+
+
+::
+How can check 2 years back data? with help of date command ?
+
+1. we have to indentify 2 year back data
+2. we have to indetify the year
+3. display 
+
+done with shell scripying later.
+
+::Calender command: 
+$ cal ==> to display current month calendor
+$ cal 2020 ==> year calendor
+$ cal 1 => to display first year complete claender
+$ cal 01 2020 --> jan 2020 calender.
+
+
+::;
+Great notes on the date and cal commands in Linux! Here's a cleaner and slightly more formatted version of your write-up for easy reference or study:
+date Command
+
+Used to display or format the system date and time.
+
+Basic Usage:
+
+$ date         # Displays current date and time
+
+Date Formatting Options
+Option	Description	Example Output
++%D	Date in MM/DD/YY format	04/21/25
++%T	Time in HH:MM:SS (24-hour)	14:35:42
++%d	Day (01 to 31)	21
++%m	Month (01 to 12)	04
++%y	Year in 2-digit format	25
++%Y	Year in 4-digit format	2025
++%H	Hour (00 to 23)	14
++%M	Minutes (00 to 59)	35
++%S	Seconds (00 to 59)	42
++%I	Hour (01 to 12 - 12-hour format)	02
+Custom Formats Examples
+
+    Display Date in dd-mm-yyyy:
+
+$ date +%d-%m-%Y
+$ date +%d:%m:%Y
+
+Create Timestamped Files
+
+Useful for logs:
+
+$ touch $(date +timestamp_%d%m%Y.log)
+$ touch server_$(date +%d%m%Y).log
+$ touch server_$(date +%d%m%Y%H%M%S).log
+
+Example output:
+
+    server_21042025.log
+
+    server_21042025143542.log
+
+Delete Files by Pattern
+
+$ rm a*     # Removes all files starting with 'a'
+
+Check Data from 2 Years Ago
+
+To identify the year:
+
+$ date --date='2 years ago' +%Y
+
+For full date:
+
+$ date --date='2 years ago' +%d-%m-%Y
+
+Can be used in scripts to process old files.
+cal Command
+
+Displays a calendar.
+
+Examples:
+
+$ cal            # Shows current month's calendar
+$ cal 2020       # Full calendar for year 2020
+$ cal 1          # January of current year
+$ cal 01 2020    # January 2020 calendar
+
+Let me know if you want a cheat-sheet PDF or want to turn this into a shell scripting tutorial!
+
+
+:::
+
+Absolutely! Here's a detailed explanation of both date and cal commands, including use cases, examples, and advanced options to help you understand and apply them in real-world scenarios.
+🕐 date Command — Display and Format Date & Time
+✅ Basic Usage:
+
+$ date
+
+Output Example:
+
+Sun Apr 21 15:32:12 EDT 2025
+
+🔤 Common Format Specifiers:
+Format	Meaning	Example
+%d	Day of month (01..31)	21
+%m	Month (01..12)	04
+%y	Year (last two digits)	25
+%Y	Year (four digits)	2025
+%H	Hour (00..23 - 24-hour format)	15
+%I	Hour (01..12 - 12-hour format)	03
+%M	Minute (00..59)	32
+%S	Second (00..60)	12
+%p	AM or PM	PM
+%T	Time in HH:MM:SS	15:32:12
+%D	Date in MM/DD/YY	04/21/25
+%F	Full date YYYY-MM-DD (ISO 8601)	2025-04-21
+📅 Custom Date Formatting Examples:
+Purpose	Command	Output
+Show dd-mm-yyyy format	date +%d-%m-%Y	21-04-2025
+Show time only	date +%T	15:32:12
+Combine Date & Time	date "+%d-%m-%Y %T"	21-04-2025 15:32:12
+📁 Using Date in File Names (For Logging)
+
+You can use the date command inside $(...) to dynamically create log files.
+
+touch server_$(date +%d%m%Y).log
+
+Output: Creates file like: server_21042025.log
+
+touch server_$(date +%d%m%Y%H%M%S).log
+
+Creates file with full timestamp:
+server_21042025153212.log
+⏳ Time Travel with --date Option
+
+Use this to calculate or format past/future dates.
+Example: Show date 2 years ago
+
+$ date --date='2 years ago'
+
+Formatted version:
+
+$ date --date='2 years ago' +%d-%m-%Y
+
+Example: Yesterday
+
+$ date --date='yesterday' +%F
+
+Example: Next week
+
+$ date --date='next week' +%A
+
+🧹 File Cleanup by Pattern
+
+Remove files starting with a specific character:
+
+rm a*       # Deletes files starting with 'a'
+rm server_* # Deletes all server log files
+
+📆 cal Command — View Calendar in Terminal
+✅ Basic Usage
+
+$ cal
+
+Shows current month’s calendar.
+📅 Other Calendar Options
+Command	Description
+cal 2020	Shows full calendar for 2020
+cal 01 2020	Shows January 2020 calendar
+cal 1	January of current year
+ncal	Modern version of cal with horizontal weeks
+📌 Use Cases for cal
+
+    Quick lookup of dates.
+
+    Checking weekdays/weekends.
+
+    Planning cron jobs or schedule scripts.
+
+🧠 Practical Examples / Use Cases
+1. 🗂 Create Daily Log with Timestamp:
+
+touch /var/logs/server_$(date +%F_%H%M).log
+
+2. 🔍 Check if File is 2 Years Old:
+
+find /path/to/logs -type f -newermt "$(date --date='2 years ago' +%F)" -print
+
+3. ⌚ Create a Shell Script to Print All Parts of the Date:
+
+#!/bin/bash
+echo "Date: $(date +%d-%m-%Y)"
+echo "Time: $(date +%H:%M:%S)"
+echo "Day: $(date +%A)"
+
+Would you like a PDF of this summary or maybe a sample shell script that rotates logs daily or weekly using date?
+
+
+
+
+
