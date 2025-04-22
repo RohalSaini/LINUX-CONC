@@ -1,0 +1,462 @@
+1. ls command
+lisy ou all files and directry present in the given directory. and if we are not prividing any directory then it will list out present working directroy.
+
+$ ls dire -> list out dire directory
+$ ls --> list out present working directory as we have not provide any directory.
+$ man command => to provide man complete documentation page related to comand.
+$ man ls -> man ls documnetation.
+$ man ls >ls_doc.txt ->save output to the file ls.txt.
+
+
+
+
+Various optios for ls commands:
+--------------------------------
+
+1. ls
+list out files and directory present in current working directory in alphabetical order.
+2. ls -r -> to list out names in reverse of alphabetical order.
+3.ls -l -> to display in long listing form or complete desciption.
+Example:
+rohal@rohal-Latitude-5501:~$ ls -l
+
+-rw-rw-r-- 1 rohal rohal  1452 Apr 16 01:18  file1.txt
+
+-rw-rwr--
+First Charcter(-) --- type of file
+(rw-rw-r--)Remaining 9 charcter are permission.
+
+1 -> number of link files
+rohal -> user or owner name
+rohal -> user/owner name.
+1452 -> size of file.
+Apr 16 01:18 -> creation date
+file1.txt -> filename.
+
+
+4. ls -t => to creation or last modified time & most resent will be at top and old one will be at bottom.
+
+5. ls -lt -> most modified at top with long lasting.
+6. ls -ltr -> old one at top due to reverse order for ltr is not important. 
+7. ls -l -t -r 
+8. ls -a -> all files including hidden files.
+9. ls -A -> all bur except . & .. and remaning things will displayed.
+example:
+ls | wc -l => 10
+ls -a| wc -l => 27
+ls -A| wc -l => 25
+
+
+10. ls -F /bin=> to display file by type(link file,directory file)
+
+/ -> directory
+* -> executable file
+@ -> link file
+
+
+11. ls -f -> list out all file including hidden files but without color convention.
+
+12. ls -i -> to display al file including inode number
+ inode -> index node inludes attributed related to file.
+ i-node is the address of loction where file attributes are stored inlcudes;
+ a. size
+ b. no if link file
+ c. creation time
+ d. modfiied time
+ e. group name
+ f. owner name
+$ls -ltri
+
+
+13 ls -R -> means Recrusive
+14. ls -s -> size , the number of block used 1block =1kb or 4KB
+
+15. ls -h -> human readable form with respect to memory.
+ 
+ 
+ 
+ ls -l /etc --> 20 entries
+ ls -l | head => top 10 entries
+ ls -l |head -20 ==> 20 entries
+ ls -l | head -30 ==> 30 entries
+ ls -l | tail -> last 10 lines
+ 
+ page by page
+ ls -l /etc | more == view content page in forward direction 
+ ls -l /etc | less == both in forward & backward dirction
+ 
+ -r,-l,-t,-a,-A,-F,-f,-s,-i,-R,-h
+ Note:
+ 
+ 1. all files including hidden files with their inode number ?
+ ls -ai
+ 
+ 2. ong listing of all files including hidden files sorted by date (oldest)
+ 
+ ls -arlt
+ 
+ ls -r == in reverse of aphabetical oder
+ ls -rt --- in reverse of modfification date
+ 
+ 
+ 
+ hidden files:
+ 
+ .abc
+ .bashrc
+ 
+ 
+
+
+
+
+:::
+he ls command is used to list all files and directories in a given directory.
+If no directory is provided, it will list the contents of the present working directory.
+Examples:
+
+$ ls dire       # Lists contents of the 'dire' directory
+$ ls            # Lists contents of the current directory
+
+📖 man Command
+
+Used to open the manual page (documentation) of a command.
+
+$ man ls              # Displays the manual for 'ls'
+$ man ls > ls_doc.txt # Saves the manual content into a file named ls_doc.txt
+
+📌 Various Options for ls Command:
+1. ls
+
+    Lists files and directories in alphabetical order (default).
+
+2. ls -r
+
+    Lists contents in reverse alphabetical order.
+
+3. ls -l
+
+    Displays files in long listing format (detailed view).
+
+Example:
+
+rohal@rohal-Latitude-5501:~$ ls -l
+-rw-rw-r-- 1 rohal rohal 1452 Apr 16 01:18 file1.txt
+
+Explanation of Output:
+
+    -rw-rw-r-- → Permissions
+
+        First character: - (regular file), d (directory), l (symlink)
+
+        Next 9: permissions for user/group/others (r=read, w=write, x=execute)
+
+    1 → Number of hard links
+
+    rohal → Owner name
+
+    rohal → Group name
+
+    1452 → File size in bytes
+
+    Apr 16 01:18 → Last modified date/time
+
+    file1.txt → File name
+
+4. ls -t
+
+    Sort by modification time, newest files first.
+
+5. ls -lt
+
+    Long listing sorted by time (newest first).
+
+6. ls -ltr
+
+    Long listing sorted by time, but in reverse (oldest files first).
+
+7. ls -l -t -r
+
+    Equivalent to ls -ltr
+
+🔍 Hidden Files and More:
+8. ls -a
+
+    Shows all files, including hidden files (starting with .)
+
+9. ls -A
+
+    Same as -a but excludes . and ..
+
+ls | wc -l      # Count regular files
+ls -a | wc -l   # Count all files including hidden
+ls -A | wc -l   # Count all except . and ..
+
+📌 Additional Options:
+10. ls -F
+
+    Appends a symbol to each item:
+
+        / for directories
+
+        * for executables
+
+        @ for symbolic links
+
+ls -F /bin
+
+11. ls -f
+
+    Lists all files (including hidden), without sorting or color formatting.
+
+12. ls -i
+
+    Shows inode numbers with each file.
+    Inodes store metadata like:
+
+        File size
+
+        Number of links
+
+        Owner, group
+
+        Creation/modification time
+
+ls -ai
+
+13. ls -R
+
+    Recursive listing – shows contents of subdirectories as well.
+
+14. ls -s
+
+    Shows the size of each file in blocks (usually 1 block = 1 KB or 4 KB).
+
+15. ls -h
+
+    Human-readable file sizes (e.g., 1K, 1M, 1G).
+
+🧾 Viewing Large Output
+
+ls -l | head           # Shows first 10 entries
+ls -l | head -20       # Shows first 20 entries
+ls -l | tail           # Shows last 10 entries
+
+ls -l /etc | more      # Page by page forward
+ls -l /etc | less      # Scroll forward and backward
+
+🧠 Quick Notes:
+
+    All files including hidden with inode numbers:
+
+ls -ai
+
+Long listing of all files including hidden ones, sorted by oldest:
+
+    ls -arlt
+
+    ls -r: Reverse alphabetical
+
+    ls -rt: Reverse by modification date
+
+🕶️ Hidden Files Example:
+
+.abc
+.bashrc
+
+Let me know if you want this formatted as a printable markdown or PDF, or if you’d like a visual cheat sheet!
+
+:::
+
+
+Extra
+
+
+ls is one of the most frequently used commands in Linux. It allows users to list directory contents, and with various options (flags), you can customize the output to get everything from hidden files to human-readable sizes and recursive listings.
+🔹 Basic Usage
+🔸 Syntax:
+
+ls [options] [directory]
+
+    If no directory is specified, ls will act on the current working directory.
+
+    If you specify a directory, ls will list its contents instead.
+
+🔹 Manual Documentation
+man Command:
+
+The man command shows the manual (documentation) for any Linux command.
+
+man ls         # Opens the manual page for ls
+man ls > ls.txt  # Saves the manual to a text file
+
+🔹 Detailed Explanation of ls Options
+1. ls
+
+Lists files and directories in the current working directory in alphabetical order.
+
+$ ls
+Documents  Downloads  file.txt  script.sh
+
+2. ls -l → Long Listing Format
+
+Displays detailed information for each file/directory.
+
+$ ls -l
+-rw-r--r-- 1 rohal rohal 1234 Apr 21 12:00 file.txt
+
+Breakdown of Each Field:
+Field	Description
+-rw-r--r--	File permissions: type and access for owner, group, others
+1	Number of hard links to the file
+rohal	Owner of the file
+rohal	Group owner of the file
+1234	Size of the file in bytes
+Apr 21 12:00	Last modified date and time
+file.txt	File name
+File Type Characters:
+
+    - → Regular file
+
+    d → Directory
+
+    l → Symbolic link
+
+    c → Character device file
+
+    b → Block device file
+
+3. ls -a → All Files (Including Hidden)
+
+Hidden files start with a dot .. This flag lists everything, including . (current dir) and .. (parent dir).
+
+$ ls -a
+.  ..  .bashrc  .profile  file.txt
+
+4. ls -A → Almost All
+
+Like -a, but excludes . and ...
+
+$ ls -A
+.bashrc  .profile  file.txt
+
+5. ls -r → Reverse Order
+
+Lists files in reverse alphabetical or reverse time if combined with -t.
+6. ls -t → Sort by Modification Time
+
+Lists newest files first, useful for checking recent activity.
+
+$ ls -lt
+
+7. ls -ltr → Long Listing, Time Sorted, Reverse
+
+Lists files from oldest to newest, with full details.
+
+$ ls -ltr
+
+8. ls -F → Show File Types with Symbols
+
+Adds a symbol to help you recognize file types:
+
+    / for directory
+
+    * for executable
+
+    @ for symbolic link
+
+    = for socket
+
+    | for FIFO
+
+$ ls -F
+bin/  run.sh*  README.txt
+
+9. ls -f → No Sorting
+
+Lists files as-is, without any formatting or sorting. Also includes hidden files.
+10. ls -i → Inode Numbers
+
+Shows the inode number for each file.
+An inode is a data structure storing metadata (excluding filename).
+
+$ ls -i
+1234567 file.txt
+
+What's in an inode:
+
+    File size
+
+    Owner and group
+
+    Permissions
+
+    Timestamps (creation, modification)
+
+    Number of hard links
+
+    Data block locations
+
+11. ls -s → Block Size Used
+
+Shows size in blocks used by each file. Often used with -h.
+12. ls -h → Human-Readable Sizes
+
+Shows file sizes in KB, MB, GB rather than bytes.
+
+$ ls -lh
+-rw-r--r-- 1 rohal rohal 1.5K Apr 21 12:00 file.txt
+
+13. ls -R → Recursive Listing
+
+Lists contents of all subdirectories, recursively.
+
+$ ls -R
+
+14. Combine Options:
+
+You can combine multiple options together:
+
+ls -alh     # Show all files with long listing and human-readable size
+ls -ltrh    # Long listing, reverse time, human-readable
+
+🔹 Paging Output
+
+When output is long, use paging tools:
+
+ls -l /etc | more     # View one page at a time
+ls -l /etc | less     # View and scroll both directions
+
+🔹 Filtering and Counting
+Count files:
+
+ls | wc -l          # Count visible files
+ls -a | wc -l       # Count all files including hidden
+ls -A | wc -l       # Count all except . and ..
+
+🔹 Hidden File Examples
+
+.bashrc
+.gitconfig
+.profile
+
+Hidden files are often used to store user preferences, config files, or version control metadata.
+🔹 Practical Tips
+
+✅ Use ls -lh to get a quick view of file sizes
+✅ Use ls -ltr when reviewing logs or backup folders
+✅ Use ls -a to debug if a config file is missing
+✅ Use ls -i for troubleshooting filesystem or inode issues
+✅ Use ls -RF for a complete directory tree and file type view
+
+Would you like this saved as a Markdown file, PDF, or want to turn it into a one-page cheat sheet?
+ 
+ 
+
+
+
+
+
+
+
+`
