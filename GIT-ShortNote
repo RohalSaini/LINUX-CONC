@@ -1,0 +1,359 @@
+GIT---Durgasoft Short Notes:
+
+Topic 2:
+
+-------------------------------------------------
+The Basic Terminology of Version Control System:
+--------------------------------------------------
+Working Directory: where developers are required to create/modify files.
+Repository: where we have to store files and metadata and version control is applicable.
+Commit: The process of sending files from working directory to the repository.
+Checkout: The process of sending files from repository to working directory.
+:::::
+
+-------------------------------------
+Benefits of Version Control System:
+-------------------------------------
+
+1.to maintain different versions and we can choose any version based on client requirement.
+2. with every version/commit we can maintain metadata like commit message as who did changes, when he did the change and what changes he did
+3. developers can share the code to the peer developers in very easy way.
+4. multiple developers can work in collaborative way
+5. parallel development.
+6. to have access control as who can read code and who can modify code
+
+----------------------------------
+Types of Version Control Systems:
+----------------------------------
+1. Centralized Version Control System
+2. De Centralized/Distributed Version Control System
+
+-------------------------------------
+Centralized Version Control System:
+------------------------------------
+This type contains only one central repository and every developer should be connected to that repository.
+The total project code will be stored in the central repository and if 4 developers are there but still we have only one repository.
+
+-------------------------------
+Problems with Centralized VCSs:
+-------------------------------
+1. Central Repository is the only place where everything is stored, which causes single point of failure. If something goes wrong to the central repository then recovery is
+very difficult.
+2. All commit and checkout operations should be performed by connecting to the central repositoty via network. If network outage, then no version control to the developer. i.e in this type, developer work space and remote repository server should be connected always.
+3. All commit and checkout operations should be performed by connecting to the central repositoty via network and hence these operations will become slow, which causes performance issues. No local operations and every version control operation should be remote operation.
+4. Oranization of central repository is very complex if number of developers and files increases. etc
+
+
+-------------------------------------
+Distributed Version Control Systems:
+-------------------------------------
+The respository is distributed and every developers workspace contains a local copy of the repository. There is no question of central repository.
+
+----------
+Benefits:
+----------
+1. The checkout and commit operations will be performed locally. Hence performance is more.
+2. To perform checkout and commit operations network is not required. Hence if there is any network outage, still version control is applicable.
+3. If something goes wrong to any repository there is a chance to recover. There is no question of single point of failure.
+4. To perform push and pull operations network must be required, but these operations are not most common operations and we are performing very rarely.
+
+
+
+
+----
+GIT:
+----
+Git is Distributed Version Control System Tool.
+GIT is developed by Linus Torvalds(Finnish software engineer), who also developed Linux Kenel.
+
+----------------
+Features of GIT:
+-----------------
+Git is very popular because of the following features:
+1. Distributed
+Git is developed based on Distributed Version Control System Architecture because of Distributed Architecture it has several advantages:
+A) Every Developer has his own local repository. All the operations can be performed locally.Hence local repo and remote repo need not be connected always.
+B) All operations will be performed locally, and hence peformance is high when compared with other VCSs. i.e it is very speed
+C) Most of operations are local. Hence we can work offline most of the times.
+D) There is no single point failure as Every Developer has his own local repository.
+E) It enables parellel development & automatic-backups.
+
+
+2) Staging Area/Index area.
+There is logical layer/virtual layer in git between working directory and local repository.
+Working Directory => Staging Area => Local Repository
+We cannot commit the files of working directory directly. First we have to add to the staging area and then we have to commit.
+This staging area is helpful to double check/cross-check our changes before commit and this type of layer is not available in other Version Control Systsem Tools like CVS, SVN etc
+Git stores files in repository in some hash form, which saves space and it uses internally snapshot mechanism for this. All these conversions and taking
+snapshots of our data will be happened in staging area before commit Eg: If a sample repository takes around 12 GB space in SVN where as in GIT it takes hardly 420 MB.
+Hence Staging Area is the most important Strength of GIT.
+
+
+3) Branching and Merging:
+We can create and work on multiple branches simultaneously and all these are branches are isolated from each other. It enables multiple work flows.
+We can merge multiple braches into a single brach. We can commit branch wise also.
+4) Moving files in GIT is very easy as GIT automatically tracks the moves. Whereas in other VCS we need to create a new file & then delete the old one.
+5) Freeware and Open Source
+6) It provides support for multiple platforms.
+
+
+--------------
+GIT commands:
+-------------
+git add: To add files from working directory to staging area.
+git commit:To commit changes from staging area to local repository.
+git push: To move files from local repository to remote repository.
+git clone: To create a new local repository from the remote repository.
+git pull :To get updated files from remote repository to local repository.
+
+------------------
+Life cycle of GIT:
+------------------
+very file in GIT is in one of the following states:
+1) Untracked:The files which are newly created in working directory and git does not aware of these files are said to be in untracked state.
+2) Staged:The files which are added to staging area are said to be in staged state and these files are ready for commit.
+3) In Repository/ Committed: Any file which is committed is said to be In Repository/Committed State.
+4) Modified: Any file which is already tracked by git, but it is modified in working directory is said to be in Modified State.
+
+
+---------
+COMMANDS:
+---------
+git init : This command will provide empty repository for our working directory, so that version control is applicable for our workspace. The name of the empty directory is .git, which is hidden directory.
+git staus: to check the wheather there are files in the stages area or not.
+git add : to add files to staged area
+git ls-files: to check files in the staged area
+ls : to check files in the working directory.
+git log: to check log detail of commit to the local repo.
+git commit -m "Both files modified": to commit the files to local repo
+git commit -a -m "Both files modified" : to commit the files to local repo
+
+
+-----------------------------------------
+Setting email and user name for the git:
+-----------------------------------------
+git config --global user.email "durgasoftonline@gmail.com"
+git config --global user.name "Durga"
+
+
+-----------------------------
+GIT COMMANDS WITH EXAMPLE 7:
+-----------------------------
+git init: Initialized empty Git repository in D:/gitprojects/project1/.git/ and .git is an empty repository, which is hidden directory.
+git status : to check status of files in all area.
+git status -s : to get concise information by using -s option.
+git add . :to add all files present in current working directory
+git add a.txt :to add one or more specified files
+git add *.txt : to use pattern for txt files
+git add *.java: to use pattern for java files
+git commit -m "commit message" : to commit to local repo
+git log : to check log detail
+
+git commit -a -m "commit message" or git commit -am "commit message"
+-a means adding files to staging area
+-m means commit message
+
+
+git config:
+git config --global user.email "durgasoftonline@gmail.com" : setting email
+git config --global user.name "Durga" : setting name
+git config --list : To list out all git configurations
+git config user.name : To display user name
+git config user.email: To display user email
+git ls-files: This command will listout all files which are tracked by git.
+ls: This command will listout all files present in workspace
+
+
+------------------
+POSTMARTAM OF GIT:
+------------------
+git log: to see History of all commits in Local Repository.
+git log file1.txt :  to see Log Information of a Particular File:
+git log --oneline : --oneline Option to get brief Log Information
+git log -n 2 
+git log -n 2 --oneline 
+git log --grep="pattern" : It shows all commits which has given pattern in the commit message.
+git log --grep="added" --oneline
+git log --since="5 minutes ago"
+git log --since="2020-05-17"
+git log --until="5 minutes ago"
+git log --before="2020-05-17"
+git log --author=Ravi --oneline
+git log --decorate --oneline :to print some extra information like branch information,head information,
+tags information
+
+----------
+GIT Differ 
+----------
+
+-----------------------------------------------------
+Case-1: To see the difference in File Content between
+-----------------------------------------------------
+Working Directory and staging Area
+$ git diff file1.txt
+diff --git a/file1.txt b/file1.txt
+index 0e17c9d..e3e329f 100644
+--- a/file1.txt
++++ b/file1.txt
+@@ -3,3 +3,4 @@ Second line in file1.txt
+Third line in file1.txt
+Fourth line in file1.txt
+Fifth line in file1.txt
++sixth line in file1.txt
+
+
+1) diff --git a/file1.txt b/file1.txt
+a/file1.txt means source copy which means staging area
+b/file1.txt means destination copy which means working directory copy
+
+2) index 0e17c9d..e3e329f 100644
+0e17c9d  hash of source file content
+e3e329f  hash of destination file content
+100644  git file mode
+First 3 characters(100) represents the type of file.
+100 means ASCII text file.
+Next 3 characters represents the file permissions.
+644  rw-r--r--
+
+3)--- a/file1.txt
+--- means missing lines in staged copy
+
+4) +++ b/file1.txt
++++ means new lines added in working directory version
+
+5) @@ -3,3 +3,4 @@
+-3,3
+- means source version
+from 3rd line onwards
+total 3 lines
++3,4
++ means destination version
+from 3rd line onwards total 4 lines
+If any line prefixed with space means it is unchanged.
+If any line prefixed with + means it is added in destination copy.
+If any line prefixed with - means it is removed in destination copy.
+@@ -3,3 +3,4 @@
+Second line in file1.txt
+Third line in file1.txt
+Fourth line in file1.txt
+Fifth line in file1.txt
++sixth line in file1.txt
+Clear indication that one line added in the working directory copy when compared with
+staged copy.
++sixth line in file1.txt
+
+----------------------------------------------------------------------------------------
+Case-2: To see the difference in File Content between Working Directory and Last Commit
+----------------------------------------------------------------------------------------
+git diff HEAD file1.txt : It shows the differences between working copy and last commit copy.
+
+---------------------------------------------------------------------------------
+Case-3: To see the difference in File Content between staged Copy and Last Commit
+----------------------------------------------------------------------------------
+to use --staged option or --cached option.
+git diff --staged HEAD file1.txt : It shows the differences between staged copy and last commit copy.
+git diff --staged HEAD file1.txt : Here HEAD is optional. Hence the following 2 commands will produce same output
+git diff --staged file1.txt : Here HEAD is optional. Hence the following 2 commands will produce same output
+
+------------------------------------------------------------------------------------------------
+Case-4: To see the difference in File Content between specific Commit and Working Directory Copy
+-------------------------------------------------------------------------------------------------
+git diff 7chracters_of_specified_commitid filename
+$ git log --oneline
+
+--------------------------------------------------------------------------------------------
+Case-5: To see the difference in file content between specific commit and staging area copy:
+--------------------------------------------------------------------------------------------
+git diff --staged e5705a6 file1.txt
+$ git diff --staged e5705a6 file1.txt
+
+---------------------------------------------------------------------------
+Case-6: To see the difference in File Content between 2 specified Commits:
+---------------------------------------------------------------------------
+$ git log --oneline // to get commit id
+$ git diff e5705a6 6745461 file1.txt
+
+----------------------------------------------------------------------------------------
+Case-7: To see the difference in File Content between Last Commit and Last butone Commit
+------------------------------------------------------------------------------------------
+git diff HEAD HEAD^ file1.txt // HEAD where Reference to latest commit
+git diff HEAD HEAD^1 file1.txt
+git diff HEAD HEAD~1 file1.txt
+git diff HEAD HEAD^ file1.txt
+
+--------------------------------------------------------------------------------
+Case-8: To see the differences in all Files Content between 2 specified Commits
+--------------------------------------------------------------------------------
+git log --oneline // to get all commit id
+git diff 6745461 be5256c // to compare two specific commits.
+
+-------------------------------------------------------------
+Case-9: To see the differences in Content between 2 Branches
+-------------------------------------------------------------
+git diff master test: It shows all differences between master branch and test branch
+
+--------------------------------------------------------------------------------
+Case-10: To see the differences in Content between Local and Remote Repositories
+--------------------------------------------------------------------------------
+git diff master origin/master : It shows all differences between master branch in local repository and master branch in remote repository.
+
+-----------
+P4Merger::
+-----------
+How to Connect p4merge with git:
+Difftool Configurations:
+git config --global diff.tool p4merge
+git config --global difftool.p4merge.path "C:\Program Files\Perforce\p4merge.exe"
+git config --global difftool.prompt false
+
+Mergetool Configurations:
+git config --global merge.tool p4merge
+git config --global mergetool.p4merge.path "C:\Program Files\Perforce\p4merge.exe"
+git config --global mergetool.prompt false
+
+git config --global --list : to list global configuration
+
+-----------------------------------------
+Case 1:Working Directory vs Staging Area
+-----------------------------------------
+git diff file1.txt
+git difftool file1.txt
+
+------------------------------------
+Case 2: Staging Area vs Last Commit
+------------------------------------
+git diff --staged HEAD file1.txt
+git difftool --staged HEAD file1.txt
+
+-----------------------------------
+Case 3: Between 2 specified Commits
+-----------------------------------
+git log --oneline
+git difftool 6745461 be5256c file1.txt : p4merge tool can be used to compare only one file at a time.
+
+---------------------------------------------------
+TOPIC - 11 Removing Files by using git rm Command
+---------------------------------------------------
+
+-------------------------------------------------------------------------
+Case-1: To Remove Files from Working Directory and staging Area (git rm)
+-------------------------------------------------------------------------
+git rm file1.txt : If we want to remove a file from working directory and from staging area then we should go for gir rm command.
+git rm -r . : It will remove all files
+
+-----------------------------------------------------------------
+Case-2: To Remove Files Only from staging Area (git rm --cached)
+------------------------------------------------------------------
+git rm --cached file4.txt :file4.txt will be removed only from staging area but not from working directory
+
+----------------------------------------------------------------
+Case-3: To Remove Files Only from Working Directory (rm Command)
+-----------------------------------------------------------------
+ls : We can use general linux command rm to remove files from working directory.
+
+:::
+1) git rm file1.txt : It will remove file from both working directory and staging area
+2) git rm --cached file1.txt : It will remove file only from staging area but not from working directory
+3) rm file1.txt : It will remove file only from working directory but not from staging area.
+4) ls : to list files in working directory.
+5. git ls-files : to list files in the staging area.
