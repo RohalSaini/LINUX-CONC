@@ -357,3 +357,292 @@ ls : We can use general linux command rm to remove files from working directory.
 3) rm file1.txt : It will remove file only from working directory but not from staging area.
 4) ls : to list files in working directory.
 5. git ls-files : to list files in the staging area.
+
+-------------------------------------------------
+TOPIC: Undo Changes with git Checkout Command
+-----------------------------------------------
+Checkout command used to discard unstanged changes in the tracked files of working directory:
+1) Only for working directory
+2) To discard unstaged changes(The changes which are not added to staging area)
+3) In the tracked files (The files which are already added to staging area/commit)
+4) git checkout is applicable only for the files which are already tracked by git. It is not
+applicable for new files.
+
+It is something like undo operation. It will copy contents of the file from index area(staging area) to working directory.
+Exampple:
+git checkout -- filename
+
+
+Summary:
+git checkout -- file.txt ==> To discard changes in working directory copy.
+git checkout => To discard changes in all tracked files of working directory and If we are not passing any argument, then this command will show the list of eligible files
+for checkout.
+Note: git checkout command can be used in branching also.
+
+---------------------------------------------
+TOPIC – 13 Git References (master and HEAD)
+--------------------------------------------
+git reference are pointer to commit ids and the most recent commit id is master or head
+.git/refs directory contains all the referernces that are head,tags and remotes.
+
+git show master -> latest commit
+git show master~1 -> commit one less than latest commit //2nd commit
+git show master~2 -> commit two less than latest commit //3rd commit
+
+
+head is reference to master and it is symbolic reference.
+Any reference poiting to another reference, it is called symbolic.
+
+For most of the commands (like git log, git diff etc) we have to provide commit id as argument. But remembering commit id is very difficult, even 7 characters also.
+Git provides some sample names for these commit ids. We can use these names directly. These are just pointers to commit ids. These sample names are called references or refs.
+References are stored in .git/refs directory as text files and there are multiple types of references like heads,tags and remotes.
+
+What is master?
+----------------
+$ git status
+On branch master
+1) master is the name of the branch.
+2) It is a reference(pointer) to last commit id. Hence where ever we required to use last
+commit id, simply we can use reference master.
+3) This information is available in .git/refs/heads/master file.
+
+What is HEAD?
+-------------
+HEAD is a reference to master.
+If any reference pointing to another reference, such type of reference is called symbolic
+reference. Hence HEAD is symbolic reference.
+Bydefault HEAD is always pointing to branch(master).
+$ git log --oneline
+49aa8d7 (HEAD -> master) both files added
+HEAD is stored in root of .git directory but not in .git/refs directory.
+$ cat HEAD
+ref: refs/heads/master
+
+Detached HEAD:
+-------------
+Sometimes HEAD is not pointing to the branch name, such type of head is considered as Detached HEAD.
+
+-----------------------------------
+TOPIC - 14 --Git reset Command
+--------------------------------
+There are 2 utilities of git reset command.
+Utility-1: To remove changes from staging area
+Utility-2: To undo commits at repository level
+
+Utility-1: To remove changes from staging area:
+-----------------------------------------------
+We can use git reset to remove changes from staging area and it is opposite to git add command.
+Example: 
+git reset file1.txt  :: to remove changes from the staging area and return to previous state.
+
+-----------------------------
+git checkout vs git reset:
+--------------------------
+git checkout can be used to discard unstaged changes in working directory.
+git reset can be used to discard staged changes from staging area.
+
+------------------------------
+git rm --cached vs git reset:
+------------------------------
+git rm --cached file1.txt // The file will be removed completely from staging area.
+git reset file1.txt // The file won't be removed from staging area, but reset to previous state(one step back).
+ls -> to view files in working directory
+git ls-files -> to view files in the staging area.
+
+We modified the content of the file1.txt and added to staging area. But we want to ignore those changes in staging area and in working directory. For
+this requirement which commands we required to use?
+git reset file1.txt => To ignore changes in staging area
+git checkout -- file1.txt => To ignore changes in working directory
+
+
+Utility-2: To undo Commits at Repository Level:
+------------------------------------------------
+Syntax:
+git reset <mode> <commitid> => It moves the HEAD to the specified commit, and all remaining recent commits will be
+removed and mode will decide whether these changes are going t0 remove from staging area and working directory or not.
+The allowed values for the mode are:
+--mixed
+--soft
+--hard
+--keep
+--merge
+
+
+1) --mixed Mode:
+It is the default mode.
+To discard commits in the local repository and to discard changes in staging area we should use reset with --mixed option.
+It won't touch working directory.
+
+::Example:
+git log --oneline
+6fcc300 (HEAD -> master) file3.txt added
+86d0ca3 file2 added
+9165d34 file1 added
+
+To discard commit-3:
+git reset --mixed 86d0ca3
+git reset --mixed HEAD~1
+git reset HEAD~1
+Now HEAD pointing to 86d0ca3
+
+----------------------------------
+To discard commit-2 and commit-3:
+----------------------------------
+git log --oneline
+59e6cd7 (HEAD -> master) file3 added again
+86d0ca3 file2 added
+9165d34 file1 added
+
+To discard commit-2 and commit-3:
+git reset --mixed 9165d34
+git reset --mixed HEAD~2
+git reset HEAD~2
+$ git log --oneline
+9165d34 (HEAD -> master) file1 
+
+Note:
+1) It is not possible to remove random commits.
+2) --mixed will work only on repository and staging area but not on working directory.
+3) whenever we are using --mixed, we can revert the changes, because changes are
+available in working directory.
+
+
+2) reset with --soft Option:
+It is exactly same as --mixed option, but changes are available in working directory as well
+as in staging area. It won't touch staging area and working directory. As changes already present in staging area, just we have to use commit to revert back.
+
+git log --oneline
+1979e61 (HEAD -> master) file3 added again
+4d32eb3 file2 added again
+9165d34 file1 added
+
+To discard the latest commit:
+git reset --soft 4d32eb3
+git reset --soft HEAD~1
+Now HEAD is pointing to 4d32eb3
+
+git ls-files -> to view staging files 
+ls -> to view working directory files
+
+To Revert Changes we have to do Just
+------------------------------------
+git commit -m "added again"
+Use Cases:
+1) If some files are missing in the last commit, then add those files and commit again.
+2) We forgot to add defect number in commit message.
+
+
+reset with --hard:
+-------------------
+It is exactly same as --mixed except that Changes will be removed from everywhere (local
+repository,staging area,working directory) and It is more dangerous command and it is destructive command.
+It is impossible to revert back and hence while using hard reset we have to take special care
+
+git log --oneline
+3d7d370 (HEAD -> master) file3 added again
+4d32eb3 file2 added again
+9165d34 file1 added
+
+To remove recent two commits permanently:
+----------------------------------------
+git reset --hard 9165d34
+git reset --hard HEAD~2
+Now changes will be removed from everywhere.
+
+--mixed vs --soft vs --hard
+1. --mixed:
+changes will be discarded in local repo and staging area.
+It won't touch working directoy.
+Working tree won't be clean.
+But we can revert with
+git add .
+git commit
+2. --soft
+Changes will be discarded only in local repository.
+It won't touch staging area and working directory.
+Working tree won't be clean.
+But we can revert with
+git commit
+3. --hard
+Changes will be discarded everywhere.
+Working tree won't be clean.
+No way to revert.
+
+Note:
+If the commits are confirmed to local repository and to discard those commits we can use
+reset command. But if the commits are confirmed to remote repository then not recommended to use
+reset command and we have to use revert command.
+
+-------------------------------------------------------------------------------
+TOPIC - 15 :: Git Aliases – Providing our own Convenient Name to git Commands
+------------------------------------------------------------------------------
+Creating alias Name: We can create alias name by using git config command.
+Syntax: git config --global alias.aliasname "original command without git"
+Eg: git config --global alias.one "log --oneline"
+Using alias Name:
+$ git one
+bb26af3 (HEAD -> master) two files we added
+257073d file1 added
+
+Q2) Create alias Name 's' to the following git Command?
+git status
+$ git s
+git: 's' is not a git command. See 'git --help'.
+$ git config --global alias.s "status"
+$ git s
+On branch master
+nothing to commit, working tree clean
+
+Where these aliases will be stored?
+All alias names will be stored inside .gitconfig file.
+This file will be available in user's home directory.
+In the windows it will be available in C:\Users\lenovo
+.gitconfig:
+[user]
+name = Ravi
+email = durgasoftonlinetraining@gmail.com
+[core]
+autocrlf = true
+[diff]
+tool = p4merge
+[difftool "p4merge"]
+path = C:\\Program Files\\Perforce\\p4merge.exe
+[difftool]
+prompt = false
+[merge]
+tool = p4merge
+[mergetool "p4merge"]
+path = C:\\Program Files\\Perforce\\p4merge.exe
+[mergetool]
+prompt = false
+[alias]
+one = log --oneline
+s = status
+
+-----------------------------------------------------------------------------
+TOPIC – 16 : Ignoring unwanted Files And Directories by using .gitignore File
+-----------------------------------------------------------------------------
+we have to make .gitignore file and we can add file extension as below to ignore files in commit.
+.gitignore:
+# Don't track a.txt
+a.txt
+#Don't track all .txt files
+*.txt
+#Don't track log files
+logs/
+#Don't track any hidden file
+.*
+
+---------------------------------------------------------
+TOPIC – 17: Any Special Treatment For Directories by Git?
+---------------------------------------------------------
+No special treatement for directories and Git always consider only files but not directories.
+Git never give any importance for the directories and Whenever we are adding files from the directory, implicitly directory also will be added.
+
+----------------------------------
+Topic-18: Branching And Merging
+----------------------------------
+
+
+
+
