@@ -642,7 +642,45 @@ Git never give any importance for the directories and Whenever we are adding fil
 ----------------------------------
 Topic-18: Branching And Merging
 ----------------------------------
+Branching:
+Whatever files created and whatever commits we did, all these happend in master branch and master branch is the default branch/ main branch in git and generally main source code will be placed in master branch.
+A Branch is nothing but an independent flow of development and by using branching concept, we can create multiple work flows.
 
+Various Commands used in branching:
+1) git branch -- to view branches
+2) git status -- to check status of current branch
+3) git branch new1branch -- It will create a new branch: new1branch
+4) git checkout new1branch -- Switched to branch 'new1branch'
+5) git checkout -b new2branch --- to create branch and switched to a new branch 'new2branch'
 
+Merging of a Branch:
+We created a branch to implement some new feature and we did some new changes in that branch, once work completed we have to merge that branch back to parent branch.
+First we have to move to master branch by git checkout master
+here, we have to use git merge feature --- a branch we want to merge with the master branch.
 
+What is Fast-forward Merge?
+After creating child branch, if we are not doing any new commits in the parent branch, then git will perform fast-forward merge. i.e updations(new commits) happened only in
+child branch but not in parent branch. In the fast-forward merge, git simply moves parent branch and points to the last commit of the child branch and it does not create any conflicts.
+
+What is Three-Way Merge?
+If changes present in both parent and child branches and if we are trying to perform merge operation, then git will do three-way merge.
+
+Merge Conflicts and Resolution Process
+In the case of 3-way merge, if the same file updated by both Parent and child branches then may be a chance of merge conflict.
+If there is a conflict then GIT stops the merge process and provides conflict message. We have to resolve the conflict manually by editing the file.
+Git will markup both branches content in the file to resolve the conflict very easily. Once we completed editing of the file with required final content, then we have to add to
+the staging area followed by commit. With that merging process will be completed
+
+How to Delete a Branch?
+git branch -d feature -- deleting feature branch.
+After deleting the branch, still files and commits are available because the changes are merged to master branch.
+git log --oneline --graph  --- graph of commit we commited.
+
+Note:
+If we want to combine all commits of feature branch into a single commit and merge that commit to the master branch, then we should go for squash option.
+git merge --squash feature
+
+-----------------------------------
+Topic-19: Merging By using Rebase
+----------------------------------
 
