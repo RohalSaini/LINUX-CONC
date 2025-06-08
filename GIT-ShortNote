@@ -683,4 +683,136 @@ git merge --squash feature
 -----------------------------------
 Topic-19: Merging By using Rebase
 ----------------------------------
+Rebase is alternative way to merge changes of two branches togther and its rebase = re + base  re arrange base.
+
+Process of rebasing:
+---------------------
+It is a two step process.
+Step-1: We have to rebase feature branch on top of master branch.
+
+A. Checkout feature branch
+git checkout feature
+B. Rebase feature branch on top of master branch
+git rebase master
+
+Step-2: We have to merge feature branch into the master branch(fast-forwar merge will
+be happend)
+A. checkout master branch
+git checkout master
+B. Merge feature branch into master branch
+git merge feature
+
+Step-1: We have to rebase feature branch on top of master branch.
+git checkout feature
+git rebase master
+Whatever new commits are there in the feature branch will be duplicated by git.Here everything(like commit message,timestamp,author name and mail) is same except
+that commit ids will be changed.
+The base commit of the feature branch(duplicate copy) will be updated as last commit of parent branch(master branch).
+
+Step-2: We have to merge feature branch into the master branch (fast-forwar merge will be happend)
+git checkout master
+git merge feature
+The master branch pointer will be changed to last commit(duplicate copy) of the feature branch. In this case Fast-forward merge will be happend.
+
+19.3) Advantages of rebasing:
+1. Rebase keeps history linear.
+In 3-way merge, a commit can have multiple parents. But in Rebase every commit has a single parent only. Hence history will be liner.
+2. Clear work flow (Linear) will there. Hence easy to understand for the developers.
+3. Internally git performs Fast-forward merge and hence there is no chance of conflicts.
+4. No extra commit like merge commit.
+
+19.4) Disadvantages of rebasing:
+1. It rewrites history. We cannot see history of commits what we did in feature branches
+2. We does not aware which changes are coming from which branch.
+
+19.5) Differences between Merge and Rebase
+Merge
+Rebase
+1. It is a single step process
+git checkout master
+git merge feature
+1. It is a two-step process
+git checkout feature
+git rebase master
+git checkout master
+git merge feature
+
+2. Merge preserves history of all commits.
+2. Rebase clears history of feature branch.
+
+3. The commits can have more than one parent and history is non-linear.
+3. Every commit has only one parent history is linear.
+
+4. In merge, there may be a chance of conflicts
+4.In Rebase, there is no chance of conflicts.
+
+5. We can aware which changes are coming from which branch
+5. We can not aware which changes are coming from which branch
+
+6. We can use merge on public repositories. 
+6. It is not recommended to use rebase on public repositories.
+
+Note:
+Rebase is very dangerous operation and it is never recommended to use on public
+repositories because it rewrites history.
+
+---------------------
+Topic-20 Stash in GIT
+---------------------
+What is git stash:
+The git stash command takes our uncommitted changes (both staged and unstaged), saves in some temporary location.
+After completing our urgent work, we can bring these stashed changes to our current working directory.
+
+Note:
+1. Stashing concept is applicable only for tracked files but not for newly created files.
+2. To perform stashing, atleast one commit must be completed.
+$ git stash
+You do not have the initial commit yet
+$ git stash
+No local changes to save
+
+How to list all available stashes:
+---------------------------------
+$ git stash list
+stash@{0}: WIP on master: 0323e16 2 files added
+
+How to check the contents of stash:
+git show stash@{0}
+
+How to perform unstash?
+We have to bring files from temporary location to our working directory. For this we have
+to perform unstash operation.
+We can perform unstashing in 2 ways:
+1. by using git stash pop
+2. by using git stash apply
+
+1. by using git stash pop:
+git stash pop stash@{0}
+It will bring stashed changes from temporary location to working directory.
+The corresponding entry will be deleted.
+
+2. by using git stash apply:
+git stash apply stash@{0}
+It will bring stashed changes from temporary location to working directory.
+But, the corresponding entry won't be deleted, so that we can use this stash in other
+branches to continue their work.
+
+---------------
+Partial Stash:
+---------------
+Assume we have multiple files, but we want stash only for some files. It is possible and this concept is called partial stash.
+We can perform partial stash by using the following command:
+$ git stash -p
+
+How to delete the stash:
+We can have any number of stashes.
+Based on our requirement, we can delete all stashes or a particular stash.
+
+git stash clear --- To delete all stashes
+git stash drop stashid --- To delete a particular stash
+
+-----------------------------------------
+Topic-21 Working with Remote Repositories
+-------------------------------------------
+
 
