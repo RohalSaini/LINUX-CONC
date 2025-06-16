@@ -51,5 +51,105 @@ css
 div { color: inherit; }
 
 
+C. Universal selector: It targets all elements and often used in CSS resets or normalization.
+css
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
+
+
+Layout Setup Demo:
+------------------
+1. assiging the default values to the layout bydefault
+css:
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+  padding: 20px;
+}
+
+
+2.!important – Emergency Override in a Web App
+css
+.btn-primary { background-color: blue; }
+/* Your override */
+.custom-button { background-color: red !important; }
+
+3.Source Order – Customizing UI Elements Without Specificity Change
+You're building a custom blog theme. You have base typography defined and later decide to change it without rewriting all CSS.
+
+css
+/* Base style */
+h2 { font-size: 24px; color: #444; }
+/* Later override */
+h2 { color: #222; }
+
+<h2>Blog Post Title</h2>
+Result: Text color will be #222 because it appears later in the CSS file, even though both selectors have the same specificity.
+Used when:
+1. Writing overrides for themes or plugins
+2. Applying customization at the end of a stylesheet
+3. Managing style layers in large projects
+
+
+4. When All 3 Interact Together class, id and type then how to override color
+Scenario: You have a login form with three styles:
+
+css
+/* Low specificity but uses !important */
+input { border: 2px solid green !important; }
+
+/* Medium specificity */
+.form-control { border: 2px solid blue; }
+
+/* High specificity */
+#login input { border: 2px solid red; }
+
+<div id="login">
+  <input class="form-control" type="text" />
+</div>
+Final Result: Green border, because !important overrides both class and ID rules, despite their specificity.
+
+5. Specificity in Theme vs. Page-Level Styles
+Scenario: A global theme sets all <h1> headers in blue, but you want homepage headers in green.
+
+css
+/* Theme stylesheet */
+h1 { color: blue; }
+
+/* Page-level override */
+.homepage h1 { color: green; }
+Result: On pages with the homepage class on the <body> or parent container, the <h1> will be green, due to higher specificity (.homepage h1 > h1).
+
+6. Using Inheritance for Consistent Typography
+<style>
+    /* Set base typography on the <body> */
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      font-size: 16px;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    /* Child elements inherit automatically */
+    h1, h2, p, ul, li, a { /* no font or color declared */ }
+
+    /* Additional styling if needed */
+    h1 { font-size: 2em; /* relative to inherited 16px */ }
+
+    a { text-decoration: none; }
+  </style>
+
+Result:
+All text uses:
+1. Segoe UI font
+2. 16px base font size
+3. #333 text color
+4. 1.5 line height
 
