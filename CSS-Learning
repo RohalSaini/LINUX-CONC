@@ -1,1 +1,55 @@
 CSS Day --1
+Chapter : 1
+-------------------------
+A. Order of preference:
+------------------------
+
+1.Important (!important)
+2. Specificity 
+3. Source of order ( last wins)
+
+
+1. Important 
+--------------
+css:
+p { color: red !important; }
+Result: Overrides all other rules (except another !important with higher specificity).
+
+
+2. Specificity: It determines which rule overrides which, based on a scoring system:
+-------------------------------------------------------------------------------------
+Selector Type	        Points
+Inline Styles	        1000
+ID Selector (#id)	    100
+Class/Pseudo-class	  10
+Element/Type	        1
+
+css
+#header { color: red; }         // 100
+.header { color: green; }       // 10
+h1 { color: blue; }             // 1
+Result: #header wins because it has the highest specificity.
+
+3. Soruce order: If two selectors have the same specificity, the one written last in the CSS wins.
+css
+<style>
+  .title { color: red; }
+  .title { color: blue; }
+</style>
+<h1 class="title">Hello</h1>
+Result: Text is blue, because both selectors are equal (class = 10), but the second .title comes after the first.
+
+
+
+B. Inheritance:  Some properties automatically inherit from the parent such as
+color , font-family ,line-height
+Not inherited by default: margin, padding, border, width, etc.
+css:
+Use inherit keyword to force inheritance:
+
+css
+div { color: inherit; }
+
+
+
+
