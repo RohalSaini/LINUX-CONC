@@ -1,0 +1,178 @@
+1. Script Example:
+
+cal
+date
+echo "Hellow how are you!!"
+save it as test.sh /* for script */
+chmod u+x test.sh  /* execution permission to user*/
+
+./test.sh /* executing the file test.sh as example of shell scripting */
+
+
+
+2. echo command
+// echo "hi" /* same as print command */
+
+
+3. User types:
+a. normal user: $ prompt
+b. super user/root user/admin user : # prompt
+
+
+4. whoami - to know user name
+5. sudo -i -- change mode to super user as su-superUser do-do
+
+6. User home directory:
+
+user home directory for rohal: /home/rohal
+user home directory for saini: /home/saini
+
+
+/home/rohal::
+/-> root directory
+home -> home directory
+
+
+Recape:
+
+What is UNIX ?
+OS
+
+Feature of UNIX
+a. Freeware 
+b. 
+c. multi open source operating systemuser 
+d. multi tasking 
+e. supports both GUI and CUI
+f. more secure
+g. Linux is next level operating system of UNIX.
+
+flavour of UNIX:
+ubuntu
+mint
+kali
+redhat linux
+suse
+
+
+Component of Linux:
+a. Shell
+b. kernel
+
+Command Execution flow:
+
+Basic commands of linux are:
+
+
+:::Linux File System:::
+-----------------------
+Linux file extension is not important as based on our content the linux can identify file type.
+
+
+ls -l:
+------
+In the command ls -l, the -l option means: -l = long listing format
+It tells ls to display detailed information about files, including:
+
+File type (regular file, directory, file, link)
+Permissions (rwx)
+Number of links
+File owner
+File group
+File size
+Last modification date/time
+File name
+
+Example:
+-rw-rw-r-- 1 rohal rohal 0 Dec  5 15:44 rohal.txt
+::
+| Field       | Value        |
+| ----------- | ------------ |
+| File type   | Regular file |
+| Permissions | rw-rw-r--    |
+| Owner       | rohal        |
+| Group       | rohal        |
+| Size        | 0 bytes      |
+| Modified    | Dec 5 15:44  |
+| Links       | 1            |
+| Name        | rohal.txt    |
+
+
+File Permisssion briefing:
+Symbol	Meaning
+-	File type: regular file (not a directory or link)
+rw-	Owner permissions: read + write
+rw-	Group permissions: read + write
+r--	Others permissions: read only
+
+So:
+Owner (rohal) → can read & write
+Group (rohal) → can read & write
+Others (everyone else) → read only
+
+
+::to know file type:
+file filename
+example
+file rohal.txt -> output file type
+
+
+:: to edit and create file
+geddit rohal.txt
+
+::to display data
+cat rohal.txt
+
+:: to know file type
+file rohal.txt
+
+
+:: mv move file to same location with new name:
+mv file1 file2	rename file1 to file2
+mv file1 /tmp/	move file1 into /tmp directory
+mv dir1 dir2/	move dir1 into dir2 directory
+
+
+FILE TYPES:
+------------
+In linux every device is represented as file
+By using this file we can communicate with that device.
+Inside /dev directory all device related files will be there.
+
+terminal is also file as tty -> it will show file corrosponding to the terminal.
+
+terminal 1  => /dev/pts/0
+terminal 2  => /dev/pts/1
+
+From terminal : /dev/0
+-----------------------
+echo "I love you " > /dev/pts/1
+clear > /dev/pts/2
+
+::to open terminal
+ctrl +alt + t => t for terminal
+ctrl + d => to close terminal
+
+
+::to display all hidden files:
+ls -a => -a means all
+
+
+bin directory -> touch ,ls mkdir , cd 
+
+:: from where commands runs to know:
+which touch, which ls , which mkdir
+
+
+:: to login with special user
+su - rohal ==> rohal user
+
+
+
+cat /etc/passwd => All user related information
+cat /etc/group => all group related information
+cat /etc/hosts => All networking,ip related information 
+
+
+
+
