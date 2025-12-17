@@ -176,4 +176,6 @@ cat /etc/hosts => All networking,ip related information
 
 chmod u-rw demo.txt // removing read and write permission for user
 
+chmod u+rw demo.txt // add read and write permission for user
+
 
