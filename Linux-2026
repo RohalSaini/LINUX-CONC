@@ -174,5 +174,6 @@ cat /etc/group => all group related information
 cat /etc/hosts => All networking,ip related information 
 
 
+chmod u-rw demo.txt // removing read and write permission for user
 
 
