@@ -178,4 +178,66 @@ chmod u-rw demo.txt // removing read and write permission for user
 
 chmod u+rw demo.txt // add read and write permission for user
 
+:::
+
+
+
+:::: Session 
+cd . = same directory
+cd .. =  change to parent directory
+cd ~ => change to user home directory
+cd => chnage to user home directory
+cd - = chnagr to recent directory
+
+
+geddit a.txt -> creating file
+touch a.txt b.txt c.tx -> creating multiple file with touch command
+
+cat >> demo.txt
+added line to it
+ctrl+d 
+: >> appending the data to the file demo.txt
+
+
+::Session 8 ::
+ls commands and its options:
+----------------------------
+manual pages
+man pages
+man command : man ls ---manual documentation for ls
+man ls >ls_doc.txt
+wc -l ls_doc.txt -> to know the count of lines in the ls_doc.txt
+
+
+line count:
+----------
+ls | wc -l -> output 10
+ls -a | wc -l -> 27
+ls -A | wc -l -> 25
+
+
+ls -F /bin -> to know the all file type 
+ls /etc | wc -l -> lines in etc directory
+
+ls -l /etc == 212 entires
+ls -l | head == 10 entries bydefaut
+ls -l | head -3 == 3 entries from head
+
+
+ls -l /etc | tail  ==10 entries from bottom
+
+ls -l /etc | tail -50 ==50 entries from bottom
+
+
+to display lines between 20 to 30   == 30-20 +1 = 10
+ls -l /etc | head -30 | tail -10 -- lines between 20 to 30
+
+
+ls -l /etc | more -> only in forward direction
+ls -l /etc | less -> both in forward and bacwad direction
+ 
+
+
+
+
 
