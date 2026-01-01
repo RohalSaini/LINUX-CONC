@@ -267,6 +267,43 @@ taking backp of sample project and send it to the github for faster use through 
 here locate and find command used to find or locate required file or directory 
 but grip command is used to find required content in the file.
 
+grip "java" java.txt
+grip "java" *.txt
+grip "java" *
+
+
+grip command can uderstand pattern or not -> yes upto certain level 
+Example:
+grip "^ava" *.txt  ---can understand
+grip -i "^the" demo.txt ---can understand
+but cannot "(java|linux)" cannot understand by grip
+
+
+egrip can understand all pattern..
+"^linux"
+"^the"
+"(java|linux)"
+
+
+
+:::grep with -F Option OR fgrep:::
+--------------------------------------
+fgrip save as keywords.txt
+
+linux
+java 
+python
+
+fgrip -f keywords.txt demo.txt 
+
+fgrip -> grip -F  -> fgrip is not recommended 
+egrip -> grip -e  -> egrip is not recommended
+
+grip -o "[6-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" demo.txt > mobile.txt -> it will extract mobile number and save to mobile.txt
+grip -o "[6-9][0-9]{9}" demo.txt > mobile.txt -- it wont understand as it cannot understand {}
+egrip -o "[6-9][0-9]{9}" demo.txt > mobile.txt -- it can understand 
+
+egrip -o "{sales|admin}" | grep -v "female"  
 
 
 
