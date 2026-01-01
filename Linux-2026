@@ -235,7 +235,9 @@ ls -l /etc | head -30 | tail -10 -- lines between 20 to 30
 
 ls -l /etc | more -> only in forward direction
 ls -l /etc | less -> both in forward and bacwad direction
- 
+
+
+find ~/stack/*.csv -mtime 180 -exec rm {} \; > /dev/null 2>&1
 
 
 
