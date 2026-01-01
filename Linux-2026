@@ -236,8 +236,32 @@ ls -l /etc | head -30 | tail -10 -- lines between 20 to 30
 ls -l /etc | more -> only in forward direction
 ls -l /etc | less -> both in forward and bacwad direction
 
-
+1. if error comes ignore it:
 find ~/stack/*.csv -mtime 180 -exec rm {} \; > /dev/null 2>&1
+
+2. compresss & decompression
+tar -cvf demo.tar file1.txt file2.txt file3.txt 
+ -c -> create
+ -v -> verbose
+ - f -> named file
+
+
+
+if you dont want output:
+tar -cf demo.tar file1.txt file2.txt file3.txt 
+ -c -> create
+ - f -> named file
+
+to view content in the tar file
+tar -tvf demo.tar
+   -t -> table view content
+    -v -> verbose output full description of file
+
+
+file demo.tar -> to know which comprssion is done!
+taking backp of sample project and send it to the github for faster use through this technique
+
+
 
 
 
