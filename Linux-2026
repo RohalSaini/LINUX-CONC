@@ -305,6 +305,36 @@ egrip -o "[6-9][0-9]{9}" demo.txt > mobile.txt -- it can understand
 
 egrip -o "{sales|admin}" | grep -v "female"  
 
+Adding group::
+-------------
+sudo addgroup course -> course group will added with GID -group ID
+to know group added or not 
+cat /etc/group -> to list all group
+grep "course" /etc/group -> to search for group we created..
+
+
+creating user in  group::
+-------------------------
+sudo adduser --ingroup course courseuser1  -- here course is a group,courseuser1 -> user creation
+
+to check::
+grep "course" /etc/passwd  -> output => courseuser1:x:1001:1002:,,,:/home/courseuser1:/bin/bash
+grep "course" /etc/group   =>  course:x:1002:
+
+
+If we dont give group name only user name given then default group name will be same as user name and user is added to the group:
+sudo adduser user1  => user -> user1 , group -> user1 will be created
+grep -w "user1" /etc/passwd  output => user1:x:1002:1003:,,,:/home/user1:/bin/bash
+grep -w "user1" /etc/passwd  output => user1:x:1002:1003:,,,:/home/user1:/bin/bash
+
+
+user1 (user/owner) -> user1 (group) 
+user2 (user/group) -> user2 (group)
+
+
+
+
+
 
 
 
