@@ -1,0 +1,29 @@
+USERADD:
+--------
+/etc/passwd = username : x : UID : GID : GECOS(Full Name,Office,Office Phone,Home Phone) : HOME : SHELL
+example: rohal:x:1000:1000:Rohal,,,:/home/rohal:/bin/bash
+
+cut command to get user related information:
+-------------------------------------------
+FAST COMMANDS TO GET EACH ATTRIBUTE
+# Username cut -d: -f1 /etc/passwd
+# UID cut -d: -f3 /etc/passwd
+# GID (Primary group) cut -d: -f4 /etc/passwd
+# Home directory cut -d: -f6 /etc/passwd
+# Login shell cut -d: -f7 /etc/passwd
+
+For a specific user: getent passwd rohal
+
+GROUP:
+-----
+/etc/group = group_name : x : GID : user_list
+
+FAST COMMANDS TO GET GROUP ATTRIBUTES
+# Group name cut -d: -f1 /etc/group
+# GID	cut -d: -f3 /etc/group
+# Members	cut -d: -f4 /etc/group
+
+Show specific group: getent group wheel
+Show user’s primary group: id rohal
+Show all groups of current user: groups
+
