@@ -32,3 +32,7 @@ find / -type f -user 1000 2>/dev/null |wc -l  -> user with userID
  Find files where user doesn't have read permission
 find /home/jdoe -type f -user rohal ! -perm -u=r
 
+find /home/jdoe -type f ! -perm -u=r	Files owner cannot read
+find /home/jdoe -type f ! -perm -g=r	Files group cannot read
+find /home/jdoe -type f ! -perm -o=r	Files others cannot read
+find /home/jdoe -type f ! -perm /444	Files no one has read permission (user, group, others)
