@@ -36,3 +36,7 @@ find /home/jdoe -type f ! -perm -u=r	Files owner cannot read
 find /home/jdoe -type f ! -perm -g=r	Files group cannot read
 find /home/jdoe -type f ! -perm -o=r	Files others cannot read
 find /home/jdoe -type f ! -perm /444	Files no one has read permission (user, group, others)
+
+
+Find executable files owned by root in /usr/local/bin
+find /usr/local/bin -type f -user root -perm -u=x
