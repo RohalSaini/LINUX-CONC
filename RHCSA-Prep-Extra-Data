@@ -580,3 +580,32 @@ Use parentheses \( ... \) to group expressions
 Test on a small directory tree first before running system-wide
 
 For exam: write commands, test mentally, then check syntax
+
+
+
+:::
+Practical Exam Tasks
+Create a backup of all PDF files in user home directories that were accessed in the last 30 days:
+
+bash
+find /home -name "*.pdf" -atime -30 -exec cp {} /backup \;
+Find all files with group write permission but not world write permission:
+
+bash
+find / -perm /020 ! -perm /002
+Search for files containing the word "password" in /etc, case-insensitive:
+
+bash
+find /etc -type f -exec grep -l -i "password" {} \;
+Command Structure Questions
+What does this command do?
+
+bash
+find /var/log -name "*.log" -size +10M -exec gzip {} \;
+Answer: Finds log files larger than 10MB in /var/log and compresses them with gzip
+
+Explain this complex find command:
+
+bash
+find / \( -path /proc -o -path /sys \) -prune -o -type f -print
+Answer: Searches all files but excludes (-prune) the /proc and /sys directories from the search
