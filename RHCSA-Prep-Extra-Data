@@ -29,4 +29,6 @@ find / -type f -perm /4002 2>/dev/null |wc -l  -> find fies everyone with writab
 find / -type f -user rohal 2>/dev/null |wc -l  -> user with username
 find / -type f -user 1000 2>/dev/null |wc -l  -> user with userID
 
+ Find files where user doesn't have read permission
+find /home/jdoe -type f -user rohal ! -perm -u=r
 
