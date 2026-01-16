@@ -339,3 +339,244 @@ find /var/log -name "*.log" -exec du -ch {} + | grep total$
 
 # Find and process with xargs (safer with -0)
 find /tmp -name "*.tmp" -print0 | xargs -0 rm -f
+
+
+
+:::
+RHCSA Find Command Practice Test
+Part 1: Multiple Choice Questions (25 points)
+1. What is the default action of find if no expression is specified?
+
+A) -ls
+
+B) -print
+
+C) -delete
+
+D) -exec echo {} \;
+
+Answer: B
+
+2. Which option prevents find from following symbolic links?
+
+A) -L
+
+B) -H
+
+C) -P
+
+D) -no-follow
+
+Answer: C (Note: -P is actually the default)
+
+3. How would you find files modified in the last 2 days?
+
+A) find /path -mtime 2
+
+B) find /path -mtime -2
+
+C) find /path -mtime +2
+
+D) find /path -mtime 48
+
+Answer: B
+
+4. What does -perm /222 find?
+
+A) Files writable by everyone
+
+B) Files writable by someone (owner, group, or others)
+
+C) Files with exactly 222 permissions
+
+D) Files not writable by anyone
+
+Answer: B
+
+5. Which is the most secure way to execute commands on found files?
+
+A) -exec
+
+B) -execdir
+
+C) -ok
+
+D) -xargs
+
+Answer: B
+
+Part 2: True/False Questions (15 points)
+6. find . -name "*.txt" -o -name "*.log" -print will print both .txt and .log files.
+
+Answer: False (It only prints .log files due to operator precedence)
+
+7. -mtime +30 finds files older than 30 days.
+
+Answer: True
+
+8. The -delete action implies -depth.
+
+Answer: True
+
+9. -perm -4000 and -perm -u=s are equivalent.
+
+Answer: True
+
+10. -exec runs commands from the starting directory, while -execdir runs from each file's directory.
+
+Answer: True
+
+Part 3: Command Writing (60 points)
+11. Find all files in /etc ending with .conf that are larger than 1MB:
+
+bash
+find /etc -name "*.conf" -size +1M
+12. Find and delete all .tmp files in /tmp that are older than 7 days:
+
+bash
+find /tmp -name "*.tmp" -mtime +7 -delete
+13. Find files owned by user apache and change their group to webserv:
+
+bash
+find / -user apache -exec chgrp webserv {} \;
+14. Find directories in /home that are not readable by others:
+
+bash
+find /home -type d ! -perm /o+r
+15. Find files with SUID or SGID bits set and list them in long format:
+
+bash
+find / -type f \( -perm /4000 -o -perm /2000 \) -ls
+16. Find all PDF files in user home directories and copy them to /backup:
+
+bash
+find /home -name "*.pdf" -exec cp {} /backup \;
+17. Count the number of regular files in the current directory and subdirectories:
+
+bash
+find . -type f | wc -l
+18. Find files modified more recently than /etc/passwd:
+
+bash
+find / -newer /etc/passwd
+19. Find empty files and directories, but exclude /proc and /sys:
+
+bash
+find / \( -path /proc -o -path /sys \) -prune -o -empty -print
+20. Find files with group write permission but NOT world write permission:
+
+bash
+find / -perm /g+w ! -perm /o+w
+Part 4: Debugging/Explanation (25 points)
+21. What's wrong with this command and how would you fix it?
+
+bash
+find / -name *.conf -exec rm {} \;
+Answer: The pattern *.conf is unquoted and will be expanded by the shell. Fix:
+
+bash
+find / -name "*.conf" -exec rm {} \;
+22. Explain what this command does:
+
+bash
+find /var/log -name "*.log" -size +10M -exec gzip {} \;
+Answer: Finds log files in /var/log larger than 10MB and compresses them with gzip.
+
+23. Why is this command potentially dangerous?
+
+bash
+find /home -name "*.sh" -exec chmod +x {} \;
+Answer: It makes all shell scripts executable without checking if they should be executable. Could be unsafe if malicious scripts exist.
+
+24. What does this complex command do?
+
+bash
+find / \( -type f -o -type d \) -perm /o=w ! -user root -print
+Answer: Finds files and directories that are world-writable and not owned by root.
+
+25. Create a command to backup configuration files modified in the last week, preserving directory structure:
+
+bash
+find /etc -type f -name "*.conf" -mtime -7 -exec cp --parents {} /backup \;
+Part 5: Scenario-Based Questions (25 points)
+26. You suspect a user has created large temporary files. Find files over 100MB in /home owned by users, list them with sizes, and save output to /var/log/largefiles.log:
+
+bash
+find /home -type f -size +100M -user * -printf "%s %p\n" > /var/log/largefiles.log
+27. As part of security audit, find setuid binaries that have been modified in the last month:
+
+bash
+find / -type f -perm /4000 -mtime -30
+28. Clean up old backup files: find .bak files older than 30 days and .tmp files older than 7 days in /var/backups:
+
+bash
+find /var/backups \( -name "*.bak" -mtime +30 -o -name "*.tmp" -mtime +7 \) -delete
+29. Find all Perl and Python scripts in /usr/local/bin that are not executable:
+
+bash
+find /usr/local/bin \( -name "*.pl" -o -name "*.py" \) ! -executable
+30. Create a daily cleanup script for /tmp: delete files older than 10 days, empty directories, and files starting with .# (emacs backups):
+
+bash
+#!/bin/bash
+find /tmp -type f -mtime +10 -delete
+find /tmp -type d -empty -delete
+find /tmp -name ".#*" -delete
+Scoring Guide:
+Part 1: 5 points each (25 total)
+
+Part 2: 3 points each (15 total)
+
+Part 3: 6 points each (60 total)
+
+Part 4: 5 points each (25 total)
+
+Part 5: 5 points each (25 total)
+
+Total: 150 points
+
+Grade Scale:
+
+135-150: Excellent (A)
+
+120-134: Good (B)
+
+105-119: Satisfactory (C)
+
+90-104: Needs Improvement (D)
+
+Below 90: Review Required
+
+Bonus Challenge Questions:
+31. Find files that are not owned by any user in /etc/passwd:
+
+bash
+find / -nouser
+32. Find files accessed more than 90 days ago but modified in the last 30 days:
+
+bash
+find / -atime +90 -mtime -30
+33. Create a tarball of all shell scripts in /usr/local modified today:
+
+bash
+find /usr/local -name "*.sh" -mtime 0 -print0 | tar -czf scripts.tar.gz --null -T -
+34. Find duplicate files by inode (hard links):
+
+bash
+find / -type f -links +1
+35. Most dangerous find command ever (DO NOT RUN!):
+
+bash
+find / -type f -exec rm -f {} \;
+What does it do? Deletes every regular file on the system.
+
+Study Tips:
+Practice without -delete first, use -ls or -print to verify
+
+Remember operator precedence: -a (AND) has higher precedence than -o (OR)
+
+Use parentheses \( ... \) to group expressions
+
+Test on a small directory tree first before running system-wide
+
+For exam: write commands, test mentally, then check syntax
