@@ -1,0 +1,18 @@
+Extra Data:
+-----------
+
+SUID (Set User ID) - 4 in first digit  → -perm -4000
+SGID (Set Group ID) - 2 in first digit → -perm -2000
+Sticky Bit - 1 in first digit  -perm -1000
+
+Remember:
+-perm 4000 = Exactly 4000 (no other bits)
+-perm -4000 = All these bits must be set (SUID + anything else)
+-perm /4000 = Any of these bits set (SUID OR SGID OR Sticky)
+
+Notation	   Equivalent octal	What it finds
+-perm -u=s	   -perm -4000	-> Files with SUID set
+-perm -g=s	   -perm -2000	 -> Files with SGID set
+-perm -o=t	   -perm -1000	 -> Files with sticky bit set
+                                          
+
