@@ -40,3 +40,302 @@ find /home/jdoe -type f ! -perm /444	Files no one has read permission (user, gro
 
 Find executable files owned by root in /usr/local/bin
 find /usr/local/bin -type f -user root -perm -u=x
+
+
+Find and count lines in text files
+find /var/log -name "*.log" -print0 2> /dev/null | xargs -0 wc -l 2> /dev/null |tail -1
+
+
+
+
+Questions:
+Find Command Operations with Answers and Explanations
+Basic Find Command Operations
+Find files by name:
+1. Find all .txt files in /var/log
+
+bash
+find /var/log -name "*.txt"
+Explanation: -name matches the base filename against the pattern. Quotes prevent shell expansion.
+
+2. Find files named hosts in the entire system
+
+bash
+find / -name hosts 2>/dev/null
+Explanation: 2>/dev/null suppresses permission denied errors. Searches from root /.
+
+3. Case-insensitive search for files named passwd
+
+bash
+find / -iname passwd 2>/dev/null
+Explanation: -iname performs case-insensitive matching.
+
+Find files by type:
+4. Find all directories in /home
+
+bash
+find /home -type d
+Explanation: -type d restricts search to directories only.
+
+5. Find all symbolic links in /etc
+
+bash
+find /etc -type l
+Explanation: -type l finds symbolic links.
+
+6. Find all regular files in /tmp
+
+bash
+find /tmp -type f
+Explanation: -type f finds regular files (not directories, links, etc.).
+
+Find files by size:
+7. Find files larger than 100MB in /var
+
+bash
+find /var -type f -size +100M
+Explanation: -size +100M = larger than 100 megabytes. M = 1024×1024 bytes.
+
+8. Find empty files in current directory
+
+bash
+find . -type f -empty
+Explanation: -empty matches empty files and directories. -type f restricts to files.
+
+9. Find files between 1MB and 10MB
+
+bash
+find / -type f -size +1M -size -10M 2>/dev/null
+Explanation: Two -size tests combined: >1MB AND <10MB.
+
+Find files by permissions:
+10. Find files with SUID bit set
+
+bash
+find / -type f -perm /4000 2>/dev/null
+# OR
+find / -type f -perm -u=s 2>/dev/null
+Explanation: -perm /4000 = any SUID bit set. / means "any of these bits". Octal 4000 = SUID.
+
+11. Find world-writable files
+
+bash
+find / -type f -perm /002 2>/dev/null
+# OR
+find / -type f -perm /o=w 2>/dev/null
+Explanation: -perm /002 = world-writable bit set. Security concern!
+
+12. Find files owned by specific user
+
+bash
+find / -user jdoe 2>/dev/null
+Explanation: -user jdoe matches files owned by user jdoe (name or UID).
+
+Find files by time:
+13. Find files modified in last 24 hours
+
+bash
+find / -type f -mtime 0
+Explanation: -mtime 0 = modified within last 24 hours. 0 means "0 days ago".
+
+14. Find files accessed more than 30 days ago
+
+bash
+find / -type f -atime +30
+Explanation: -atime +30 = last accessed more than 30 days ago. + means "greater than".
+
+15. Find files changed (status) in last 7 days
+
+bash
+find / -type f -ctime -7
+Explanation: -ctime -7 = status changed within last 7 days. Status changes include permission, ownership changes. - means "less than".
+
+Common RHCSA-Style Scenarios
+File management tasks:
+16. Find and delete all .tmp files in /tmp
+
+bash
+find /tmp -type f -name "*.tmp" -delete
+# Safer alternative:
+find /tmp -type f -name "*.tmp" -exec rm -f {} \;
+Explanation: -delete removes files. Always test first with -print instead of -delete.
+
+17. Find and compress all log files older than 7 days
+
+bash
+find /var/log -name "*.log" -mtime +7 -exec gzip {} \;
+Explanation: -exec gzip {} \; runs gzip on each file. {} is replaced by filename.
+
+18. Find and change permissions of files owned by a specific user
+
+bash
+find /home -user jdoe -type f -exec chmod 644 {} \;
+Explanation: Changes permissions to 644 (rw-r--r--) for all jdoe's regular files.
+
+System administration tasks:
+19. Find all files modified after a certain date for audit
+
+bash
+touch -t 202312010000 /tmp/timestamp
+find / -type f -newer /tmp/timestamp 2>/dev/null
+Explanation: Creates a reference file with specific timestamp, finds files newer than it.
+
+20. Locate configuration files that have been changed
+
+bash
+find /etc -type f -name "*.conf" -newer /etc/passwd
+Explanation: Finds .conf files in /etc modified more recently than /etc/passwd.
+
+21. Find core dump files and remove them
+
+bash
+find / -type f -name "core" -o -name "core.*" -delete 2>/dev/null
+# OR safer:
+find / -type f \( -name "core" -o -name "core.*" \) -exec rm -f {} \; 2>/dev/null
+Explanation: \( ... \) groups conditions. -o = OR. Finds files named "core" or "core.*".
+
+User/Group related:
+22. Find all files owned by user jdoe
+
+bash
+find / -user jdoe 2>/dev/null | head -20
+Explanation: Lists first 20 files owned by jdoe. Pipe to head to avoid huge output.
+
+23. Find files with group developers
+
+bash
+find / -group developers 2>/dev/null
+Explanation: -group developers matches group name or GID.
+
+24. Find files where user doesn't have read permission
+
+bash
+find /home/jdoe -type f ! -readable
+Explanation: ! -readable = not readable by current user. ! negates the test.
+
+Advanced/Practical Exam Problems
+Combined criteria searches:
+25. Find .conf files modified in last 2 days
+
+bash
+find /etc -name "*.conf" -mtime -2
+Explanation: Combines name pattern with time condition.
+
+26. Find executable files owned by root in /usr/local/bin
+
+bash
+find /usr/local/bin -type f -executable -user root
+Explanation: -executable matches files executable by current user.
+
+27. Find PDF files larger than 5MB in user home directories
+
+bash
+find /home -type f -name "*.pdf" -size +5M
+Explanation: Multiple criteria: type, name pattern, size.
+
+Action execution with find:
+28. Find files and list them with ls -l
+
+bash
+find /var/log -type f -name "*.log" -exec ls -l {} \;
+# OR
+find /var/log -type f -name "*.log" -ls
+Explanation: Two methods: -exec ls -l or built-in -ls action.
+
+29. Find and copy files to backup directory
+
+bash
+find /etc -name "*.conf" -exec cp {} /backup/ \;
+# To preserve directory structure:
+find /etc -name "*.conf" -exec cp --parents {} /backup/ \;
+Explanation: --parents preserves directory structure in target.
+
+30. Find and count lines in text files
+
+bash
+find /var/log -name "*.log" -exec wc -l {} \;
+# Total lines in all files:
+find /var/log -name "*.log" -exec wc -l {} + | tail -1
+Explanation: + at end groups files for single wc command. tail -1 shows total.
+
+Permission and security:
+31. Find files with 777 permissions
+
+bash
+find / -type f -perm 777 2>/dev/null
+Explanation: -perm 777 = exactly 777 permissions. Security risk!
+
+32. Find files with no owner (orphaned files)
+
+bash
+find / -nouser 2>/dev/null
+Explanation: -nouser = user ID doesn't exist in /etc/passwd.
+
+33. Find files with sticky bit set
+
+bash
+find / -type d -perm /1000 2>/dev/null
+# OR for directories only (sticky bit meaningful on dirs):
+find / -type d -perm -1000 2>/dev/null
+Explanation: -perm /1000 = sticky bit set. Usually on directories like /tmp.
+
+Key Concepts Explained:
+Permission Tests:
+-perm 644 = exactly 644
+
+-perm -644 = ALL bits in 644 must be set (at least these permissions)
+
+-perm /644 = ANY bit in 644 is set (matches 644, 755, etc.)
+
+Time Tests:
+-mtime n = n*24 hours ago
+
+-mtime +n = more than n days ago
+
+-mtime -n = less than n days ago
+
+-mtime 0 = last 24 hours
+
+Size Suffixes:
+c = bytes
+
+k = kilobytes (1024 bytes)
+
+M = megabytes (1024² bytes)
+
+G = gigabytes (1024³ bytes)
+
+Security Best Practices:
+Test first: Replace -delete with -print
+
+Use -execdir instead of -exec when possible
+
+Quote patterns: -name "*.txt"
+
+Handle errors: 2>/dev/null for system-wide searches
+
+Be specific: Use full paths, not relative
+
+Common Pitfalls:
+bash
+# WRONG: Will only print .log files
+find . -name "*.txt" -o -name "*.log" -print
+
+# CORRECT: Parentheses group conditions
+find . \( -name "*.txt" -o -name "*.log" \) -print
+
+# WRONG: Shell expands pattern
+find . -name *.txt
+
+# CORRECT: Pattern quoted
+find . -name "*.txt"
+Useful Combinations:
+bash
+# Find and archive
+find /home -name "*.doc" -print0 | tar -czf docs.tar.gz --null -T -
+
+# Find and calculate total size
+find /var/log -name "*.log" -exec du -ch {} + | grep total$
+
+# Find and process with xargs (safer with -0)
+find /tmp -name "*.tmp" -print0 | xargs -0 rm -f
