@@ -16,3 +16,17 @@ Notation	   Equivalent octal	What it finds
 -perm -o=t	   -perm -1000	 -> Files with sticky bit set
                                           
 
+Find and compress all log files older than 7 days
+find /tmp -type f -size -2M -name "*.conf" -exec tar -czvf uploaded.tar.gz {} +
+
+find /etc -type f -size -2M -name "*.conf" -exec cp {} /tmp/ \; 2>/dev/null | wc -l
+
+find / -type f -perm /002 2>/dev/null |wc -l  -> find fies everyone with writable
+find / -type f -perm /o=w 2>/dev/null |wc -l  ->  find fies everyone with writable
+
+find / -type f -perm /4002 2>/dev/null |wc -l  -> find fies everyone with writable and set user id
+
+find / -type f -user rohal 2>/dev/null |wc -l  -> user with username
+find / -type f -user 1000 2>/dev/null |wc -l  -> user with userID
+
+
