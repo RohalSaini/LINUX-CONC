@@ -778,5 +778,13 @@ openssl passwd -6 MyPassword123 ->encripted passwd
 sudo useradd test09 -p "encripted-password"
 
 
+Most Linux distros enable private groups by default (USERGROUPS_ENAB=yes)
+Explicitly using -U ensures exam questions always pass
+sudo useradd -m -U alice -> -U option
+
+
+
+
+
 
 
