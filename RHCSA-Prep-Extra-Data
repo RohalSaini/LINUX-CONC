@@ -744,4 +744,33 @@ Group ownership, setgid enabled
 
 Lock an account after too many failed logins:
 
-Use faillock or pam_tally2 (depending on RHEL version)
+Use faillock or pam_tally2 (depending on RHEL version
+
+
+
+
+
+:::::::::::::::::::::::Useradd related  questions: ::::::::::::::::::::::::::::
+
+Example 1: Using default skeleton
+sudo useradd -m testuser
+Home directory: /home/testuser   ---> Files copied from /etc/skel
+
+Example 2: Using a custom skeleton
+Create your custom skeleton directory:
+sudo mkdir -p /tmp/my-skel --> to make dir
+cp -a /etc/skel/. /tmp/my-skel/ --> to copy files
+ll /tmp/my-skel/  -> to check
+
+sudo echo "echo 'Welcome, new user'" > /tmp/my-skel/.welcome  -> making welcome file
+ll /tmp/my-skel/  -> checking welcome file
+sudo useradd -m -k /tmp/my-skel/ test03 -> creating user
+ll /home/test03/
+
+
+
+
+
+
+
+
