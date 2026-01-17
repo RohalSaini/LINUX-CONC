@@ -609,3 +609,139 @@ Explain this complex find command:
 bash
 find / \( -path /proc -o -path /sys \) -prune -o -type f -print
 Answer: Searches all files but excludes (-prune) the /proc and /sys directories from the search
+
+
+::::
+1. User Account Management
+Create users and groups
+
+useradd, groupadd
+
+Set default values (/etc/default/useradd, /etc/login.defs)
+
+Modify users and groups
+
+usermod, groupmod
+
+Change primary/secondary groups
+
+Delete users and groups
+
+userdel, groupdel
+
+Remove home directories and mail spools
+
+2. Password Policies & Aging
+Set passwords
+
+passwd, chage
+
+Configure password aging
+
+/etc/shadow fields
+
+chage -M <days> <user>
+
+Lock/unlock accounts
+
+passwd -l, passwd -u, usermod -L/-U
+
+3. User Environment Configuration
+Default files
+
+/etc/skel/ – skeleton directory for new users
+
+Shell assignment
+
+chsh, usermod -s
+
+Umask settings
+
+Set default permissions (e.g., umask 0027)
+
+4. Privilege Escalation
+sudo configuration
+
+Edit /etc/sudoers with visudo
+
+Grant specific commands or full access
+
+Configure password-less sudo for specific commands
+
+Switch users
+
+su – <username>
+
+5. Group Membership & Permissions
+Primary vs. supplementary groups
+
+usermod -g (primary), usermod -G (supplementary)
+
+Manage group membership
+
+gpasswd -a/-d
+
+Shared directories with setgid
+
+chmod g+s <directory>
+
+6. Authentication Files
+Locations & formats
+
+/etc/passwd, /etc/shadow, /etc/group
+
+Manual editing precautions
+
+Use tools like vipw, vigr
+
+7. Special Permissions
+SUID – chmod u+s <file>
+
+SGID – chmod g+s <file/dir>
+
+Sticky bit – chmod +t <directory> (e.g., /tmp)
+
+8. Default User Settings
+Modify user defaults
+
+useradd -D to view/set defaults
+
+Change login.defs
+
+PASS_MAX_DAYS, UMASK, etc.
+
+9. Restricted Shells & Login Control
+Restrict user shells
+
+Assign /sbin/nologin or /bin/false
+
+Control login access
+
+/etc/nologin file
+
+PAM configuration basics
+
+10. Practice Tasks
+Create a user with:
+
+Specific UID/GID
+
+Custom home directory
+
+Supplementary groups
+
+Set password policy:
+
+Expire in 90 days, warn 7 days before
+
+Configure sudo:
+
+Allow a user to restart httpd without a password
+
+Create a shared directory:
+
+Group ownership, setgid enabled
+
+Lock an account after too many failed logins:
+
+Use faillock or pam_tally2 (depending on RHEL version)
