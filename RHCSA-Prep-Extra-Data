@@ -767,9 +767,15 @@ ll /tmp/my-skel/  -> checking welcome file
 sudo useradd -m -k /tmp/my-skel/ test03 -> creating user
 ll /home/test03/
 
+:::
+Hash Prefix Meanings (VERY IMPORTANT)
+Prefix	Algorithm
+$1$	MD5 (OLD ❌ insecure)
+$5$	SHA-256
+$6$	SHA-512 (BEST ✅)
 
-
-
+openssl passwd -6 MyPassword123 ->encripted passwd
+sudo useradd test09 -p "encripted-password"
 
 
 
